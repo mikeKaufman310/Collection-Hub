@@ -3,8 +3,8 @@ package com.collectionHub.collectionHub.types;
 import java.util.ArrayList;
 
 public class Collection{
-    ArrayList<CollectionItem> collectionList;
-    String name;
+    public ArrayList<CollectionItem> collectionList;
+    public String name;
 
     public Collection(){
         collectionList = new ArrayList<>();
