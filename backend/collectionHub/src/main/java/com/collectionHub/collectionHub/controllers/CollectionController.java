@@ -18,7 +18,8 @@ public class CollectionController{
         //jdbc query to get all collections and their info if collectionsList is null
         //if collectionsList is not null, just return its contents
         if(collectionsList == null){//where jdbc query will be made
-            return new ArrayList<>();
+            collectionsList = new ArrayList<>();
+            return collectionsList;
         }
         System.out.println("Sending frontend all stored collections");
         return collectionsList;
