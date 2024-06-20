@@ -3,17 +3,27 @@ A solution to what collectibles you own and desire
 
 ***Tech Stack***
 
- - Backend: Java Spring Boot
+ - Back-end: Java Spring Boot
+ - Web Front-end: React JS
 
  
 
 ***Build Instructions***
 
-**Backend**
+**Back-end**
 
-From root directory, run following command...
+From root directory, run the following command...
 ```
 RUN cd backend/collectionHub &&
 ./mvnw clean &&
 ./mvnw spring-boot:run
+```
+
+
+**Web Front-end**
+
+From root directory, run the following command...
+```
+RUN cd web/collection-hub &&
+npm start
 ```
