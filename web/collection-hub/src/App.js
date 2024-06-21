@@ -1,38 +1,22 @@
-import {useEffect, useState} from 'react';
 
-const BACKEND_PORT = 8080;
+import {  BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+
+import Home from './Home';
 
 export default function App(){
   return(
-      <div>
-          <h1>
-              Welcome to CollectionHub!
-          </h1>
-          <CollectionButton/>
-      </div>
+    <Router>
+            <div>
+                <nav>
+                    <ul>
+                        <li><Link to="/">Home</Link></li>
+                    </ul>
+                </nav>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                </Routes>
+            </div>
+        </Router>
   );
 }
 
-
-function CollectionButton(){
-  const [data, setData] = useState([]);
-  
-  useEffect(()=>{
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', `http://localhost:${BACKEND_PORT}/allCollections`);
-  xhr.onload = function() {
-    if (xhr.status === 200) {
-      setData(JSON.parse(xhr.responseText));
-    }
-  };
-  xhr.send();
-  }, []);
-  
-  console.log(data);//for deubgging
-
-  return(
-    <div>
-      data
-    </div>
-  );
-}
