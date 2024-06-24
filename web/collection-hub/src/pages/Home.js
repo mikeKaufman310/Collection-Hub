@@ -31,7 +31,7 @@ function AddCollectionButton(){
   
 function CollectionButton(){
     const [data, setData] = useState([]);
-    
+    const navigate = useNavigate();
     useEffect(()=>{
     const xhr = new XMLHttpRequest();
     xhr.open('GET', `http://localhost:${BACKEND_PORT}/allCollections`);
@@ -55,7 +55,7 @@ function CollectionButton(){
       <div>
         <ul>
           {data.map((element, index) => (
-            <li key={index}>{element.name.substring(15,element.name.length - 2)}</li>
+            <button key={index} onClick={() => navigate('/viewCollection', {state:{element}})}>{element.name.substring(15,element.name.length - 2)}</button>
           ))}
         </ul>
       </div>

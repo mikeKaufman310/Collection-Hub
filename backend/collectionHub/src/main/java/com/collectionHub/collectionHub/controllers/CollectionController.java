@@ -27,8 +27,8 @@ public class CollectionController{
     }
 
     @CrossOrigin(origins = "http://localhost:4567")
-    @GetMapping("/getCollection/{collectionName}")
-    public Collection getCollection(@PathVariable("collectionName") String collectionName){
+    @GetMapping("/getCollection")
+    public Collection getCollection(@RequestBody String collectionName){
         for(Collection i : collectionsList){
             if(i.name == collectionName){
                 System.out.println("Sending frontend collection: " + i.name);
