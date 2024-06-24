@@ -53,7 +53,11 @@ function CollectionButton(){
     }
     return(
       <div>
-        data
+        <ul>
+          {data.map((element, index) => (
+            <li key={index}>{element.name.substring(15,element.name.length - 2)}</li>
+          ))}
+        </ul>
       </div>
     );
 }
