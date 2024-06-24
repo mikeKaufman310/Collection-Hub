@@ -40,8 +40,8 @@ public class CollectionController{
     }
 
     @CrossOrigin(origins = "http://localhost:4567")
-    @GetMapping("/deleteCollection/{collectionName}")
-    public Collection deleteCollection(@PathVariable("collectionName") String collectionName){
+    @DeleteMapping("/allCollections")
+    public Collection deleteCollection(@RequestBody String collectionName){
         for(Collection i : collectionsList){
             if(i.name == collectionName){
                 collectionsList.remove(i);
@@ -63,7 +63,7 @@ public class CollectionController{
     }
 
     @CrossOrigin(origins = "http://localhost:4567")
-    @PostMapping("/addItemToCollection/{collectionName}")
+    @PostMapping("/addItemToCollection/{collectionName}")//this should be a put
     public CollectionItem addItemToCollection(@RequestBody CollectionItem newItem, @PathVariable("collectionName") String collectionName){
         for(Collection i: collectionsList){
             if(i.name == collectionName){
@@ -77,7 +77,7 @@ public class CollectionController{
     }
 
     @CrossOrigin(origins = "http://localhost:4567")
-    @PostMapping("/removeItemFromCollection/{collectionName}")
+    @DeleteMapping("/allCollections/{collectionName}")
     public CollectionItem removeItem(@RequestBody CollectionItem item, @PathVariable("collectionName") String collectionName){
         for(Collection i : collectionsList){
             if(i.name == collectionName && i.collectionList.contains(item)){
