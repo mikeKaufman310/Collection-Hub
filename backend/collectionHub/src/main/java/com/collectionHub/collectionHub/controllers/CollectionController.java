@@ -13,6 +13,7 @@ import com.collectionHub.collectionHub.types.CollectionItem;
 public class CollectionController{
     ArrayList<Collection> collectionsList;
 
+    @CrossOrigin(origins = "http://localhost:4567")
     @GetMapping("/allCollections")
     public ArrayList<Collection> allCollections(){
         //jdbc query to get all collections and their info if collectionsList is null
@@ -25,6 +26,7 @@ public class CollectionController{
         return collectionsList;
     }
 
+    @CrossOrigin(origins = "http://localhost:4567")
     @GetMapping("/getCollection/{collectionName}")
     public Collection getCollection(@PathVariable("collectionName") String collectionName){
         for(Collection i : collectionsList){
@@ -37,6 +39,7 @@ public class CollectionController{
         return null;
     }
 
+    @CrossOrigin(origins = "http://localhost:4567")
     @GetMapping("/deleteCollection/{collectionName}")
     public Collection deleteCollection(@PathVariable("collectionName") String collectionName){
         for(Collection i : collectionsList){
@@ -50,13 +53,16 @@ public class CollectionController{
         return null;
     }
 
-    @PostMapping("/addCollection")
-    public Collection addCollection(@RequestBody Collection newCollection){
+    @CrossOrigin(origins = "http://localhost:4567")
+    @PostMapping("/allCollections")
+    public Collection addCollection(@RequestBody String collectionName){
+        Collection newCollection = new Collection(collectionName);
         collectionsList.add(newCollection);
         System.out.println("Added " + newCollection.name + " to stored collections");
         return newCollection;
     }
 
+    @CrossOrigin(origins = "http://localhost:4567")
     @PostMapping("/addItemToCollection/{collectionName}")
     public CollectionItem addItemToCollection(@RequestBody CollectionItem newItem, @PathVariable("collectionName") String collectionName){
         for(Collection i: collectionsList){
@@ -70,6 +76,7 @@ public class CollectionController{
         return null;
     }
 
+    @CrossOrigin(origins = "http://localhost:4567")
     @PostMapping("/removeItemFromCollection/{collectionName}")
     public CollectionItem removeItem(@RequestBody CollectionItem item, @PathVariable("collectionName") String collectionName){
         for(Collection i : collectionsList){
