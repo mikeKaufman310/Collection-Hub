@@ -34,6 +34,7 @@ export default function Collection(){
         return(
             <div>
                 <button onClick={goHome}>Home</button>
+                <button onClick={()=>navigate('/addItem', {state:{collectionName}})}>Add Item</button>
                 <h1>{collectionName}</h1>
             </div>
         );
@@ -42,6 +43,7 @@ export default function Collection(){
     return(
         <div>
             <button onClick={goHome}>Home</button>
+            <button onClick={()=>navigate('/addItem', {state:{collectionName}})}>Add Item</button>
             <h1>{collectionName}</h1>
             <ul>
                 {data.map((element, index)=> (
@@ -50,4 +52,27 @@ export default function Collection(){
             </ul>
         </div>
     );
-} 
+}
+
+//function AddItemButton(){
+//    //const addItem = async() => {
+//    //    const response = await fetch(`http://localhost:${BACKEND_PORT}/addItemToCollection`, {
+//    //        method: 'POST',
+//    //        headers: {
+//    //            'Content-Type': 'application/json',
+//    //        },
+//    //        body: JSON.stringify({  }),
+//    //    })
+//    //};
+//
+//    const navigate = useNavigate();
+//    const navAddItem = () => {
+//        navigate('/addItem', )
+//    };
+//
+//    return(
+//        <div>
+//            <button>Add Item</button>
+//        </div>
+//    );
+//}

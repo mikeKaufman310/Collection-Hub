@@ -5,8 +5,8 @@ import java.util.*;
 public record CollectionItem(
     String name,
     String series, 
-    int number,
+    Integer number,
     Date dateReleased,
     Date dateOfAcquisition,
-    int productionRun
+    Integer productionRun
 ){}
