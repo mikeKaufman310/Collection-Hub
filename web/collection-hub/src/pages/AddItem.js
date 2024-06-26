@@ -33,14 +33,24 @@ export default function AddItem(){
     const handleChangePR = (event) => {
         setValuePR(event.target.value);
     };
-    const stateCollectionName = "xxxxxxxxxxxxxx"+collectionName+"x";//bc of parsing in collection component
+    const stateCollectionName = {name: "xxxxxxxxxxxxxx"+collectionName+"x"};//bc of parsing in collection component
+    //console.log(stateCollectionName.name);//for debugging
     const addItem = async() => {
         const response = await fetch(`http://localhost:${BACKEND_PORT}/addItemToCollection`, {
                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-               body: JSON.stringify({ collectionName, inputValueName, inputValueSeries, inputValueNumber, inputValueDR, inputValueDA, inputValuePR}),
+               body: JSON.stringify(
+                { 
+                    collectionName: {collectionName}, 
+                    name: {inputValueName}, 
+                    series: {inputValueSeries}, 
+                    number: {inputValueNumber}, 
+                    dateReleased: {inputValueDR}, 
+                    dateOfAcquisition: {inputValueDA}, 
+                    productionRun: {inputValuePR}
+                }),
             });
 
             const data = await response.json();
@@ -51,12 +61,12 @@ export default function AddItem(){
 
     return(
         <div>
-            <input type="text" placeholder="Name" value={inputValueName} onChange={handleChangeName}>Name</input>
-            <input type="text" placeholder="Series" value={inputValueSeries} onChange={handleChangeSeries}>Series (Optional)</input>
-            <input type="text" placeholder="Number" value={inputValueNumber} onChange={handleChangeNumber}>Number (Optional)</input>
-            <input type="text" placeholder="DR" value={inputValueDR} onChange={handleChangeDR}>Date of Release (MM/DD/YY) (Optional)</input>
-            <input type="text" placeholder="DA" value={inputValueDA} onChange={handleChangeDA}>Date of Acquisition (MM/DD/YY) (Optional)</input>
-            <input type="text" placeholder="PR" value={inputValuePR} onChange={handleChangePR}>Production Run (Optional)</input>
+            <input type="text" placeholder="Name" value={inputValueName} onChange={handleChangeName}/>
+            <input type="text" placeholder="Series (Optional)" value={inputValueSeries} onChange={handleChangeSeries}/>
+            <input type="text" placeholder="Number (Optional)" value={inputValueNumber} onChange={handleChangeNumber}/>
+            <input type="text" placeholder="Date of Release (MM/DD/YY) (Optional)" value={inputValueDR} onChange={handleChangeDR}/>
+            <input type="text" placeholder="Date of Acquisition (MM/DD/YY) (Optional)" value={inputValueDA} onChange={handleChangeDA}/>
+            <input type="text" placeholder="Production Run (Optional)" value={inputValuePR} onChange={handleChangePR}/>
             <button onClick={addItem}>Add Item</button>
         </div>
     );
