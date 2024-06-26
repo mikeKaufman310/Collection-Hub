@@ -5,8 +5,8 @@ const BACKEND_PORT = 8080;
 export default function Collection(){
        
     const location = useLocation();    
-    const {stateCollectionName} = location.state || {};
-    const collectionName = stateCollectionName.name.substring(15,stateCollectionName.name.length - 2);
+    const {element} = location.state || {};
+    const collectionName = element.name.substring(15,element.name.length - 2);
 
     console.log("Navigated to " + collectionName + " page"); 
 
@@ -19,14 +19,19 @@ export default function Collection(){
     const [data, setData] = useState([]);
     useEffect(()=>{
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', `http://localhost:${BACKEND_PORT}/getCollection?{collectionName}`);
-    xhr.onload = function() {
-      if (xhr.status === 200) {
-        setData(JSON.parse(xhr.responseText));
+    xhr.open('POST', `http://localhost:${BACKEND_PORT}/getCollection`, true);
+    xhr.onreadystatechange = function() {
+      if(xhr.readyState === XMLHttpRequest.DONE){
+        if (xhr.status === 200) {
+            console.log(xhr.responseText);
+            //setData(JSON.parse(xhr.responseText));
+        }else{
+            console.error(xhr.statusText);
+        }
       }
     };
-    xhr.send();
-    }, []);
+    xhr.send(JSON.stringify({collectionName: {collectionName}}));
+    });
     
     console.log("Recieved " + collectionName +" data from server");
     console.log(data);//for deubgging

@@ -33,16 +33,16 @@ export default function AddItem(){
     const handleChangePR = (event) => {
         setValuePR(event.target.value);
     };
-    const stateCollectionName = {name: "xxxxxxxxxxxxxx"+collectionName+"x"};//bc of parsing in collection component
-    //console.log(stateCollectionName.name);//for debugging
+    const element = {name: "xxxxxxxxxxxxxx"+collectionName+"x"};//bc of parsing in collection component
+    //console.log(element.name);//for debugging
     const addItem = async() => {
-        const response = await fetch(`http://localhost:${BACKEND_PORT}/addItemToCollection`, {
-               method: 'POST',
+        const response = await fetch(`http://localhost:${BACKEND_PORT}/allCollections`, {
+               method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-               body: JSON.stringify(
-                { 
+               body: 
+                JSON.stringify({ 
                     collectionName: {collectionName}, 
                     name: {inputValueName}, 
                     series: {inputValueSeries}, 
@@ -56,7 +56,7 @@ export default function AddItem(){
             const data = await response.json();
             console.log("Sent item " + inputValueName + " to be added to " + collectionName);
             console.log(data);
-            navigate('/viewCollection', {state:{stateCollectionName}});
+            navigate('/viewCollection', {state:{element}});
         };
 
     return(

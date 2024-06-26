@@ -31,7 +31,7 @@ public class CollectionController{
     }
 
     @CrossOrigin(origins = "http://localhost:4567")
-    @GetMapping("/getCollection")
+    @PostMapping("/getCollection")
     public Collection getCollection(@RequestBody String collectionName){
         for(Collection i : collectionsList){
             if(i.name == collectionName){
@@ -39,7 +39,7 @@ public class CollectionController{
                 return i;
             }
         }
-        System.out.println("Sending frontend error, could not find stored collection called " + collectionName);
+        System.out.println("Sending frontend error, could not find stored collection called " + collectionName + " to display collection");
         return null;
     }
 
@@ -67,7 +67,7 @@ public class CollectionController{
     }
 
     @CrossOrigin(origins = "http://localhost:4567")
-    @PostMapping("/addItemToCollection")//this should be a put
+    @PutMapping("/allCollections")
     public CollectionItem addItemToCollection(@RequestBody String collectionName,
                                                 @RequestBody String name,
                                                 @RequestBody String series, 
@@ -75,6 +75,7 @@ public class CollectionController{
                                                 @RequestBody String dateReleased, 
                                                 @RequestBody String dateOfAcquisition, 
                                                 @RequestBody Integer productionRun){
+        //System.out.println(collectionName);//for debugging
         for(Collection i: collectionsList){
             if(i.name == collectionName){
                 try{
@@ -89,7 +90,7 @@ public class CollectionController{
                 }
             }
         }
-        System.out.println("Sending frontend error, could not find stored collection called " + collectionName);
+        System.out.println("Sending frontend error, could not find stored collection called " + collectionName + " to add item");
         return null;
     }
 
