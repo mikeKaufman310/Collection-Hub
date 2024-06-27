@@ -35,18 +35,32 @@ export default function Collection(){
         }
       }
     };
-    //console.log("collection: " + collectionName);//for debugging
     xhr.send(JSON.stringify(collectionName));
     
     
     console.log("Recieved " + collectionName +" data from server");
-    console.log(data);//for debuggin
+
+    const deleteCollection = async() => {
+        const response = await fetch(`http://localhost:${BACKEND_PORT}/allCollections`,{
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(collectionName)
+        });
+
+        const data = await response.json();
+        console.log("Sent item " + collectionName + " to be deleted");
+        console.log(data);
+        navigate('/');
+    };
 
     if(data.length === 0){
         return(
             <div>
                 <button onClick={goHome}>Home</button>
                 <button onClick={()=>navigate('/addItem', {state:{collectionName}})}>Add Item</button>
+                <button onClick={deleteCollection}>Delete Collection</button>
                 <h1>{collectionName}</h1>
             </div>
         );
@@ -56,38 +70,15 @@ export default function Collection(){
         <div>
             <button onClick={goHome}>Home</button>
             <button onClick={()=>navigate('/addItem', {state:{collectionName}})}>Add Item</button>
+            <button onClick={deleteCollection}>Delete Collection</button>
             <h1>{collectionName}</h1>
             <ul>
                 {data.collectionList.map((element, index)=> (
-                    <li key={index}>{element.name}</li>
+                    <button key={index}>{element.name}</button>
                 ))}
             </ul>
         </div>
     );
 }
 
-//
-//
-//
-//function AddItemButton(){
-//    //const addItem = async() => {
-//    //    const response = await fetch(`http://localhost:${BACKEND_PORT}/addItemToCollection`, {
-//    //        method: 'POST',
-//    //        headers: {
-//    //            'Content-Type': 'application/json',
-//    //        },
-//    //        body: JSON.stringify({  }),
-//    //    })
-//    //};
-//
-//    const navigate = useNavigate();
-//    const navAddItem = () => {
-//        navigate('/addItem', )
-//    };
-//
-//    return(
-//        <div>
-//            <button>Add Item</button>
-//        </div>
-//    );
-//}
+
