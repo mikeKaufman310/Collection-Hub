@@ -33,7 +33,7 @@ export default function AddItem(){
     const handleChangePR = (event) => {
         setValuePR(event.target.value);
     };
-    const element = {name: "xxxxxxxxxxxxxx"+collectionName+"x"};//bc of parsing in collection component
+    const element = {name: collectionName};//bc of parsing in collection component
     //console.log(element.name);//for debugging
     const addItem = async() => {
         const response = await fetch(`http://localhost:${BACKEND_PORT}/allCollections`, {
@@ -42,15 +42,15 @@ export default function AddItem(){
                     'Content-Type': 'application/json',
                 },
                body: 
-                JSON.stringify({ 
-                    collectionName: {collectionName}, 
-                    name: {inputValueName}, 
-                    series: {inputValueSeries}, 
-                    number: {inputValueNumber}, 
-                    dateReleased: {inputValueDR}, 
-                    dateOfAcquisition: {inputValueDA}, 
-                    productionRun: {inputValuePR}
-                }),
+                JSON.stringify( 
+                    collectionName, 
+                    inputValueName, 
+                    inputValueSeries, 
+                    inputValueNumber, 
+                    inputValueDR, 
+                    inputValueDA, 
+                    inputValuePR
+                ),
             });
 
             const data = await response.json();

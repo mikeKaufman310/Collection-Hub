@@ -6,7 +6,7 @@ export default function Collection(){
        
     const location = useLocation();    
     const {element} = location.state || {};
-    const collectionName = element.name.substring(15,element.name.length - 2);
+    const collectionName = element.name/**.substring(15,element.name.length - 2)**/;
 
     console.log("Navigated to " + collectionName + " page"); 
 
@@ -30,7 +30,8 @@ export default function Collection(){
         }
       }
     };
-    xhr.send(JSON.stringify({collectionName: {collectionName}}));
+    //console.log("collection: " + collectionName);//for debugging
+    xhr.send(JSON.stringify(collectionName));
     });
     
     console.log("Recieved " + collectionName +" data from server");

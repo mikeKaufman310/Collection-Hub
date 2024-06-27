@@ -34,12 +34,12 @@ public class CollectionController{
     @PostMapping("/getCollection")
     public Collection getCollection(@RequestBody String collectionName){
         for(Collection i : collectionsList){
-            if(i.name == collectionName){
+            if(i.name.equals(collectionName.substring(1, collectionName.length()-1))){
                 System.out.println("Sending frontend collection: " + i.name);
                 return i;
             }
         }
-        System.out.println("Sending frontend error, could not find stored collection called " + collectionName + " to display collection");
+        System.out.println("Sending frontend error, could not find stored collection called " + collectionName.substring(1, collectionName.length()-1) + " to display collection");
         return null;
     }
 
@@ -47,7 +47,7 @@ public class CollectionController{
     @DeleteMapping("/allCollections")
     public Collection deleteCollection(@RequestBody String collectionName){
         for(Collection i : collectionsList){
-            if(i.name == collectionName){
+            if(i.name.equals(collectionName.substring(1, collectionName.length()-1))){
                 collectionsList.remove(i);
                 System.out.println("Removing " + collectionName + " from stored collections");
                 return i;
@@ -60,7 +60,7 @@ public class CollectionController{
     @CrossOrigin(origins = "http://localhost:4567")
     @PostMapping("/allCollections")
     public Collection addCollection(@RequestBody String collectionName){
-        Collection newCollection = new Collection(collectionName);
+        Collection newCollection = new Collection(collectionName.substring(1, collectionName.length()-1));
         collectionsList.add(newCollection);
         System.out.println("Added " + newCollection.name + " to stored collections");
         return newCollection;
@@ -77,7 +77,7 @@ public class CollectionController{
                                                 @RequestBody Integer productionRun){
         //System.out.println(collectionName);//for debugging
         for(Collection i: collectionsList){
-            if(i.name == collectionName){
+            if(i.name.equals(collectionName.substring(1, collectionName.length()-1))){
                 try{
                     DateFormat form = new SimpleDateFormat("mm/dd/yy");
                     CollectionItem newItem = new CollectionItem(name, series, number, form.parse(dateReleased), form.parse(dateOfAcquisition), productionRun);
@@ -98,7 +98,7 @@ public class CollectionController{
     @DeleteMapping("/allCollections/{collectionName}")
     public CollectionItem removeItem(@RequestBody CollectionItem item, @PathVariable("collectionName") String collectionName){
         for(Collection i : collectionsList){
-            if(i.name == collectionName && i.collectionList.contains(item)){
+            if(i.name.equals(collectionName.substring(1, collectionName.length()-1)) && i.collectionList.contains(item)){
                 i.collectionList.remove(item);
                 System.out.println("Removed " + item.name() + " from collection " + collectionName);
                 return item;

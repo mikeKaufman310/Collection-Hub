@@ -24,7 +24,7 @@ export default function AddCollection(){
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ inputValue }),
+            body: JSON.stringify(inputValue),
           });
         
           const data = await response.json();

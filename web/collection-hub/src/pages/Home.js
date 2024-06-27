@@ -55,7 +55,7 @@ function CollectionButton(){
       <div>
         <ul>
           {data.map((element, index) => (
-            <button key={index} onClick={() => navigate('/viewCollection', {state:{element}})}>{element.name.substring(15,element.name.length - 2)}</button>
+            <button key={index} onClick={() => navigate('/viewCollection', {state:{element}})}>{element.name/**.substring(15,element.name.length - 2)**/}</button>
           ))}
         </ul>
       </div>
