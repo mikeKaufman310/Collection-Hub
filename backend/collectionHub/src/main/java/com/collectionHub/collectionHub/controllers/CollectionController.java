@@ -67,30 +67,24 @@ public class CollectionController{
     }
 
     @CrossOrigin(origins = "http://localhost:4567")
-    @PutMapping("/allCollections")
-    public CollectionItem addItemToCollection(@RequestBody String collectionName,
-                                                @RequestBody String name,
-                                                @RequestBody String series, 
-                                                @RequestBody Integer number, 
-                                                @RequestBody String dateReleased, 
-                                                @RequestBody String dateOfAcquisition, 
-                                                @RequestBody Integer productionRun){
+    @PostMapping("/addToCollections")
+    public CollectionItem addItemToCollection(@RequestBody CollectionItem item){
         //System.out.println(collectionName);//for debugging
         for(Collection i: collectionsList){
-            if(i.name.equals(collectionName.substring(1, collectionName.length()-1))){
+            if(i.name.equals(item.collectionName()/**.substring(1, item.collectionName().length())**/)){
                 try{
                     DateFormat form = new SimpleDateFormat("mm/dd/yy");
-                    CollectionItem newItem = new CollectionItem(name, series, number, form.parse(dateReleased), form.parse(dateOfAcquisition), productionRun);
-                    i.collectionList.add(newItem);
-                    System.out.println("Added " + newItem.name() + " to " + i.name);
-                    return newItem;
+                    //CollectionItem newItem = new CollectionItem(item.name(), item.series(), item.number(), form.parse(item.dateReleased()), form.parse(item.dateOfAcquisition()), item.productionRun());
+                    i.collectionList.add(item);
+                    System.out.println("Added " + item.name() + " to " + i.name);
+                    return item;
                 }
                 catch(Exception e){
                     System.out.println("Uanble to parse date");
                 }
             }
         }
-        System.out.println("Sending frontend error, could not find stored collection called " + collectionName + " to add item");
+        System.out.println("Sending frontend error, could not find stored collection called " + item.collectionName() + " to add item");
         return null;
     }
 

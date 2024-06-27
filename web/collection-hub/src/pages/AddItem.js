@@ -11,10 +11,10 @@ export default function AddItem(){
     const {collectionName} = location.state || {};
     const [inputValueName, setValueName] = useState('');
     const [inputValueSeries, setValueSeries] = useState('');
-    const [inputValueNumber, setValueNumber] = useState('');
+    const [inputValueNumber, setValueNumber] = useState(0);
     const [inputValueDR, setValueDR] = useState('');
     const [inputValueDA, setValueDA] = useState('');
-    const [inputValuePR, setValuePR] = useState('');
+    const [inputValuePR, setValuePR] = useState(0);
     const handleChangeName = (event) => {
         setValueName(event.target.value);
     };
@@ -34,23 +34,23 @@ export default function AddItem(){
         setValuePR(event.target.value);
     };
     const element = {name: collectionName};//bc of parsing in collection component
-    //console.log(element.name);//for debugging
+    const jsonFormData = {
+        collectionName: collectionName,
+        name: inputValueName,
+        series: inputValueSeries,
+        number: inputValueNumber,
+        dateReleased: inputValueDR,
+        dateOfAcquisition: inputValueDA,
+        productionRun: inputValuePR
+    };
+    //console.log(JSON.stringify(jsonFormData));//for debugging
     const addItem = async() => {
-        const response = await fetch(`http://localhost:${BACKEND_PORT}/allCollections`, {
-               method: 'PUT',
+        const response = await fetch(`http://localhost:${BACKEND_PORT}/addToCollections`, {
+               method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-               body: 
-                JSON.stringify( 
-                    collectionName, 
-                    inputValueName, 
-                    inputValueSeries, 
-                    inputValueNumber, 
-                    inputValueDR, 
-                    inputValueDA, 
-                    inputValuePR
-                ),
+               body: JSON.stringify(jsonFormData)
             });
 
             const data = await response.json();

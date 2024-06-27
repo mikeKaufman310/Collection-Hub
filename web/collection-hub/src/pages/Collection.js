@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import {useState, useEffect } from 'react';
+import {useState} from 'react';
 
 const BACKEND_PORT = 8080;
 export default function Collection(){
@@ -17,14 +17,19 @@ export default function Collection(){
     
 
     const [data, setData] = useState([]);
-    useEffect(()=>{
+    const [trigger, setTrigger] = useState(false);
+    
     const xhr = new XMLHttpRequest();
     xhr.open('POST', `http://localhost:${BACKEND_PORT}/getCollection`, true);
     xhr.onreadystatechange = function() {
       if(xhr.readyState === XMLHttpRequest.DONE){
         if (xhr.status === 200) {
             console.log(xhr.responseText);
-            //setData(JSON.parse(xhr.responseText));
+            if(!trigger){
+                setData(JSON.parse(xhr.responseText));
+                setTrigger(true);
+            }
+            return;
         }else{
             console.error(xhr.statusText);
         }
@@ -32,10 +37,10 @@ export default function Collection(){
     };
     //console.log("collection: " + collectionName);//for debugging
     xhr.send(JSON.stringify(collectionName));
-    });
+    
     
     console.log("Recieved " + collectionName +" data from server");
-    console.log(data);//for deubgging
+    console.log(data);//for debuggin
 
     if(data.length === 0){
         return(
@@ -53,14 +58,17 @@ export default function Collection(){
             <button onClick={()=>navigate('/addItem', {state:{collectionName}})}>Add Item</button>
             <h1>{collectionName}</h1>
             <ul>
-                {data.map((element, index)=> (
-                    <li key={index}>{element}</li>
+                {data.collectionList.map((element, index)=> (
+                    <li key={index}>{element.name}</li>
                 ))}
             </ul>
         </div>
     );
 }
 
+//
+//
+//
 //function AddItemButton(){
 //    //const addItem = async() => {
 //    //    const response = await fetch(`http://localhost:${BACKEND_PORT}/addItemToCollection`, {
