@@ -3,6 +3,7 @@ A solution to what collectibles you own and desire
 
 ***Tech Stack***
 
+ - Database: PostgreSQL
  - Back-end: Java Spring Boot
  - Web Front-end: React JS
 
