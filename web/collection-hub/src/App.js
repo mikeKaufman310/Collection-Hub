@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import AddCollection from './pages/AddCollection';
 import Collection from './pages/Collection';
 import AddItem from './pages/AddItem';
+import Item from './pages/Item';
 
 export default function App(){
   return(
@@ -15,6 +16,7 @@ export default function App(){
                         <li><Link to="/addCollection">Add Collection</Link></li>
                         <li><Link to="/viewCollection">View Collection</Link></li>
                         <li><Link to="/addItem">Add Item</Link></li>
+                        <li><Link to="/viewItem">View Item</Link></li>
                     </ul>
                 </nav>
                 <Routes>
@@ -22,6 +24,7 @@ export default function App(){
                     <Route path="/addCollection" element={<AddCollection />}/>
                     <Route path='/viewCollection' element={<Collection />}/>
                     <Route path='/addItem' element={<AddItem />}/>
+                    <Route path='/viewItem' element={<Item />}/>
                 </Routes>
             </div>
         </Router>

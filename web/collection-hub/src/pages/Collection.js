@@ -74,7 +74,7 @@ export default function Collection(){
             <h1>{collectionName}</h1>
             <ul>
                 {data.collectionList.map((element, index)=> (
-                    <button key={index}>{element.name}</button>
+                    <button key={index} onClick={() => navigate('/viewItem', {state: {element}})}>{element.name}</button>
                 ))}
             </ul>
         </div>

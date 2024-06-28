@@ -89,16 +89,16 @@ public class CollectionController{
     }
 
     @CrossOrigin(origins = "http://localhost:4567")
-    @DeleteMapping("/allCollections/{collectionName}")
-    public CollectionItem removeItem(@RequestBody CollectionItem item, @PathVariable("collectionName") String collectionName){
+    @DeleteMapping("/deleteFromCollections")
+    public CollectionItem removeItem(@RequestBody CollectionItem item){
         for(Collection i : collectionsList){
-            if(i.name.equals(collectionName.substring(1, collectionName.length()-1)) && i.collectionList.contains(item)){
+            if(i.name.equals(item.collectionName()/**.substring(1, item.collectionName().length()-1)*/) && i.collectionList.contains(item)){
                 i.collectionList.remove(item);
-                System.out.println("Removed " + item.name() + " from collection " + collectionName);
+                System.out.println("Removed " + item.name() + " from collection " + item.collectionName());
                 return item;
             }
         }
-        System.out.println("Sending frontend error, could not find stored collection called " + collectionName + " or could not find item called " + item.name());
+        System.out.println("Sending frontend error, could not find stored collection called " + item.collectionName() + " or could not find item called " + item.name());
         return null;
     }
 }
