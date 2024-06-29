@@ -3,26 +3,57 @@ package com.collectionHub.collectionHub.controllers;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Optional;
 import java.lang.*;
 import java.text.*;
 import java.text.SimpleDateFormat;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.collectionHub.collectionHub.types.Collection;
 import com.collectionHub.collectionHub.types.CollectionItem;
+
+import com.collectionHub.collectionHub.repository.ItemRepository;
+import com.collectionHub.collectionHub.entity.Item;
 
 @RestController
 public class CollectionController{
     ArrayList<Collection> collectionsList;
 
+    @Autowired
+    private ItemRepository collectionRepository;
+
     @CrossOrigin(origins = "http://localhost:4567")
     @GetMapping("/allCollections")
     public ArrayList<Collection> allCollections(){
         //jdbc query to get all collections and their info if collectionsList is null
+        if(this.collectionsList==null){
+            try{
+                Iterable<Item> rows = collectionRepository.findAll();
+                ArrayList<String> collectionsAdded=new ArrayList<>();
+                this.collectionsList = new ArrayList<>();
+                for(Item i: rows){
+                    if(collectionsAdded.contains(i.getCollectionName())){
+                        for(int j = 0; j < collectionsList.size();j++){
+                            if(collectionsList.get(j).name.equals(i.getCollectionName())){
+                                collectionsList.get(j).collectionList.add(new CollectionItem(i.getCollectionName(), i.getName(), i.getSeries(), i.getNumber(), i.getDateReleased(), i.getDateOfAcquisition(), i.getProductionRun()));
+                                break;
+                            }
+                        }
+                    }else{
+                        collectionsAdded.add(i.getCollectionName());
+                        collectionsList.add(new Collection(new CollectionItem(i.getCollectionName(), i.getName(), i.getSeries(), i.getNumber(), i.getDateReleased(), i.getDateOfAcquisition(), i.getProductionRun())));
+                    }
+                }
+            
+            }catch(Exception e){
+                System.out.println("Unable to initally query database");
+            }
+        }
         //if collectionsList is not null, just return its contents
-        if(collectionsList == null){//where jdbc query will be made
+        if(collectionsList.size() == 0){//where jdbc query will be made
             collectionsList = new ArrayList<>();
             return collectionsList;
         }

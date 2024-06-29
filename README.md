@@ -11,6 +11,14 @@ A solution to what collectibles you own and desire
 
 ***Build Instructions***
 
+**Database**
+
+From root directory, run the following command...
+```
+brew services start postgresql
+psql postgres
+```
+
 **Back-end**
 
 From root directory, run the following command...

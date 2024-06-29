@@ -1,4 +1,4 @@
-package main.java.com.collectionHub.collectionHub.entity;
+package com.collectionHub.collectionHub.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -6,9 +6,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class CollectionItem {
+public class Item {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long itemId;
     private String collectionName;
     private String name;
