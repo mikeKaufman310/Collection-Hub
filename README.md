@@ -15,7 +15,7 @@ A solution to what collectibles you own and desire
 
 From root directory, run the following command...
 ```
-brew services start postgresql
+RUN brew services start postgresql &&
 psql postgres
 ```
 
