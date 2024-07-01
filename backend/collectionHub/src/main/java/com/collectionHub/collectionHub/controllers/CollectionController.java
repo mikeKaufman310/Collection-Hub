@@ -31,6 +31,7 @@ public class CollectionController{
         //jdbc query to get all collections and their info if collectionsList is null
         if(this.collectionsList==null){
             try{
+                //Iterable<Item> rows = collectionRepository.findAllItems();
                 Iterable<Item> rows = collectionRepository.findAll();
                 ArrayList<String> collectionsAdded=new ArrayList<>();
                 this.collectionsList = new ArrayList<>();
