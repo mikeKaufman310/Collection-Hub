@@ -18,26 +18,31 @@ import com.collectionHub.collectionHub.types.CollectionItem;
 import com.collectionHub.collectionHub.repository.ItemRepository;
 import com.collectionHub.collectionHub.entity.Item;
 
+/**
+ * REST API Controller for backend
+ */
 @RestController
 public class CollectionController{
-    ArrayList<Collection> collectionsList;
-    Iterable<Item> databaseItems;
+    ArrayList<Collection> collectionsList;//list of backend stored and organized collections
+    Iterable<Item> databaseItems;//list of items received from database in most recent query
 
     @Autowired
-    private ItemRepository collectionRepository;
+    private ItemRepository collectionRepository;//database abastraction
 
+    /**
+     * Rest Get mapping to get all collection data
+     * @return list of collection objects
+     */
     @CrossOrigin(origins = "http://localhost:4567")
     @GetMapping("/allCollections")
     public ArrayList<Collection> allCollections(){
-        //jdbc query to get all collections and their info if collectionsList is null
-        if(this.collectionsList==null /*|| this.databaseItems.size()>0*/){
+        if(this.collectionsList==null){//case of when backend is just started
             try{
-                //Iterable<Item> rows = collectionRepository.findAllItems();
-                Iterable<Item> rows = collectionRepository.findAll();
+                Iterable<Item> rows = collectionRepository.findAll();//query db
                 this.databaseItems = rows;
-                ArrayList<String> collectionsAdded=new ArrayList<>();
+                ArrayList<String> collectionsAdded=new ArrayList<>();//initialize backend store
                 this.collectionsList = new ArrayList<>();
-                for(Item i: rows){
+                for(Item i: rows){//parse received items in query
                     if(collectionsAdded.contains(i.getcollection())){
                         for(int j = 0; j < collectionsList.size();j++){
                             if(collectionsList.get(j).name.equals(i.getcollection())){
@@ -50,13 +55,12 @@ public class CollectionController{
                         collectionsList.add(new Collection(new CollectionItem(i.getcollection(), i.getName(), i.getSeries(), i.getNumber(), i.getDatereleased(), i.getDateOfAcquisition(), i.getProductionRun())));
                     }
                 }
-            
             }catch(Exception e){
                 System.out.println("Unable to initally query database");
             }
         }
         //if collectionsList is not null, just return its contents
-        if(collectionsList.size() == 0){//where jdbc query will be made
+        if(collectionsList.size() == 0){//case that backend has been running and has been updating db
             collectionsList = new ArrayList<>();
             return collectionsList;
         }
@@ -64,6 +68,11 @@ public class CollectionController{
         return collectionsList;
     }
 
+    /**
+     * Rest Post mapping to get a specific collection
+     * @param collectionName name of the collection to get
+     * @return collection object
+     */
     @CrossOrigin(origins = "http://localhost:4567")
     @PostMapping("/getCollection")
     public Collection getCollection(@RequestBody String collectionName){
@@ -77,6 +86,11 @@ public class CollectionController{
         return null;
     }
 
+    /**
+     * Rest Delete mapping to delete a collection
+     * @param collectionName name of collection to be deleted
+     * @return deleted collection object
+     */
     @CrossOrigin(origins = "http://localhost:4567")
     @DeleteMapping("/allCollections")
     public Collection deleteCollection(@RequestBody String collectionName){
@@ -96,6 +110,11 @@ public class CollectionController{
         return null;
     }
 
+    /**
+     * Rest Post mapping to add a new collection
+     * @param collectionName name of new collection IMPORTANT NOTE: new collections without any items are not persisted
+     * @return new collection object
+     */
     @CrossOrigin(origins = "http://localhost:4567")
     @PostMapping("/allCollections")
     public Collection addCollection(@RequestBody String collectionName){
@@ -105,12 +124,16 @@ public class CollectionController{
         return newCollection;
     }
 
+    /**
+     * Rest Post mapping to add item to existing collection
+     * @param item item to be added to existing collection
+     * @return newly added collection item object
+     */
     @CrossOrigin(origins = "http://localhost:4567")
     @PostMapping("/addToCollections")
     public CollectionItem addItemToCollection(@RequestBody CollectionItem item){
-        //System.out.println(collectionName);//for debugging
-        for(Collection i: collectionsList){
-            if(i.name.equals(item.collectionName()/**.substring(1, item.collectionName().length())**/)){
+        for(Collection i: collectionsList){//find existing stored collection
+            if(i.name.equals(item.collectionName())){
                 try{
                     Item newItem = new Item();
                     newItem.setcollection(item.collectionName());
@@ -121,7 +144,7 @@ public class CollectionController{
                     newItem.setDateOfAcquisition(item.dateOfAcquisition());
                     newItem.setProductionRun(item.productionRun());
                     System.out.println("Persisting: " + newItem);
-                    this.collectionRepository.save(newItem);
+                    this.collectionRepository.save(newItem);//persist new item and possibly new collection
                     i.collectionList.add(item);
                     System.out.println("Added " + item.name() + " to " + i.name);
                     return item;
@@ -135,11 +158,16 @@ public class CollectionController{
         return null;
     }
 
+    /**
+     * Rest Delete mapping to remove item from a specified collection IMPORTANT NOTE: need to added persistence update to this function
+     * @param item collection item to be deleted
+     * @return collection item obejct that was deleted
+     */
     @CrossOrigin(origins = "http://localhost:4567")
     @DeleteMapping("/deleteFromCollections")
     public CollectionItem removeItem(@RequestBody CollectionItem item){
         for(Collection i : collectionsList){
-            if(i.name.equals(item.collectionName()/**.substring(1, item.collectionName().length()-1)*/) && i.collectionList.contains(item)){
+            if(i.name.equals(item.collectionName()) && i.collectionList.contains(item)){
                 i.collectionList.remove(item);
                 System.out.println("Removed " + item.name() + " from collection " + item.collectionName());
                 return item;

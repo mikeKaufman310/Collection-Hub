@@ -6,10 +6,10 @@ import org.springframework.stereotype.*;
 import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 
+/**
+ * Class to Implement repository absraction of postgres database
+ */
 @Repository
 public interface ItemRepository extends CrudRepository<Item, Long> {
     List<Item> findById(long id);
-
-    //@Query("SELECT  FROM items;")
-    //Iterable<Item> findAllItems();
 }
