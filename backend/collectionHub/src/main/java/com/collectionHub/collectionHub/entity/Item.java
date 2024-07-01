@@ -11,25 +11,25 @@ import jakarta.persistence.Table;
 public class Item {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long itemId;
-    private String collectionName;
+    private Long id;
+    private String collection;
     private String name;
     private String series;
     private Integer number;
-    private String dateReleased;
-    private String dateOfAcquisition;
+    private String datereleased;
+    private String dateofacquisition;
     private Integer productionRun;
 
-    public Long getItemId(){
-        return this.itemId;
+    public Long getid(){
+        return this.id;
     }
 
-    public void setItemId(Long num){
-        this.itemId = num;
+    public void setid(Long num){
+        this.id = num;
     }
 
-    public String getCollectionName(){
-        return this.collectionName;
+    public String getcollection(){
+        return this.collection;
     }
 
     public String getName(){
@@ -44,20 +44,20 @@ public class Item {
         return this.number;
     }
 
-    public String getDateReleased(){
-        return this.dateReleased;
+    public String getDatereleased(){
+        return this.datereleased;
     }
 
     public String getDateOfAcquisition(){
-        return this.dateOfAcquisition;
+        return this.dateofacquisition;
     }
 
     public Integer getProductionRun(){
         return this.productionRun;
     }
 
-    public void setCollectionName(String str){
-        this.collectionName = str;
+    public void setcollection(String str){
+        this.collection = str;
     }
 
     public void setName(String str){
@@ -72,15 +72,20 @@ public class Item {
         this.number = num;
     }
 
-    public void setDateReleased(String str){
-        this.dateReleased = str;
+    public void setDatereleased(String str){
+        this.datereleased = str;
     }
 
     public void setDateOfAcquisition(String str){
-        this.dateOfAcquisition = str;
+        this.dateofacquisition = str;
     }
 
     public void setProductionRun(Integer num){
         this.productionRun = num;
+    }
+
+    public String toString(){
+        return "id: " + this.id + " collection: " + this.collection + " name: " + this.name
+        + " series: " + this.series + " number: " + this.number + " datereleased: " + this.datereleased + " dateofacquisition: " + this.dateofacquisition +" productionrun: " + this.productionRun;
     }
 }

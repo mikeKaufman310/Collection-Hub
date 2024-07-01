@@ -21,6 +21,7 @@ import com.collectionHub.collectionHub.entity.Item;
 @RestController
 public class CollectionController{
     ArrayList<Collection> collectionsList;
+    Iterable<Item> databaseItems;
 
     @Autowired
     private ItemRepository collectionRepository;
@@ -29,23 +30,24 @@ public class CollectionController{
     @GetMapping("/allCollections")
     public ArrayList<Collection> allCollections(){
         //jdbc query to get all collections and their info if collectionsList is null
-        if(this.collectionsList==null){
+        if(this.collectionsList==null /*|| this.databaseItems.size()>0*/){
             try{
                 //Iterable<Item> rows = collectionRepository.findAllItems();
                 Iterable<Item> rows = collectionRepository.findAll();
+                this.databaseItems = rows;
                 ArrayList<String> collectionsAdded=new ArrayList<>();
                 this.collectionsList = new ArrayList<>();
                 for(Item i: rows){
-                    if(collectionsAdded.contains(i.getCollectionName())){
+                    if(collectionsAdded.contains(i.getcollection())){
                         for(int j = 0; j < collectionsList.size();j++){
-                            if(collectionsList.get(j).name.equals(i.getCollectionName())){
-                                collectionsList.get(j).collectionList.add(new CollectionItem(i.getCollectionName(), i.getName(), i.getSeries(), i.getNumber(), i.getDateReleased(), i.getDateOfAcquisition(), i.getProductionRun()));
+                            if(collectionsList.get(j).name.equals(i.getcollection())){
+                                collectionsList.get(j).collectionList.add(new CollectionItem(i.getcollection(), i.getName(), i.getSeries(), i.getNumber(), i.getDatereleased(), i.getDateOfAcquisition(), i.getProductionRun()));
                                 break;
                             }
                         }
                     }else{
-                        collectionsAdded.add(i.getCollectionName());
-                        collectionsList.add(new Collection(new CollectionItem(i.getCollectionName(), i.getName(), i.getSeries(), i.getNumber(), i.getDateReleased(), i.getDateOfAcquisition(), i.getProductionRun())));
+                        collectionsAdded.add(i.getcollection());
+                        collectionsList.add(new Collection(new CollectionItem(i.getcollection(), i.getName(), i.getSeries(), i.getNumber(), i.getDatereleased(), i.getDateOfAcquisition(), i.getProductionRun())));
                     }
                 }
             
@@ -80,6 +82,11 @@ public class CollectionController{
     public Collection deleteCollection(@RequestBody String collectionName){
         for(Collection i : collectionsList){
             if(i.name.equals(collectionName.substring(1, collectionName.length()-1))){
+                for(Item j: databaseItems){//remove from postgres database
+                    if(i.name.equals(j.getcollection())){
+                        this.collectionRepository.deleteById(j.getid());
+                    }
+                }
                 collectionsList.remove(i);
                 System.out.println("Removing " + collectionName + " from stored collections");
                 return i;
@@ -105,14 +112,22 @@ public class CollectionController{
         for(Collection i: collectionsList){
             if(i.name.equals(item.collectionName()/**.substring(1, item.collectionName().length())**/)){
                 try{
-                    DateFormat form = new SimpleDateFormat("mm/dd/yy");
-                    //CollectionItem newItem = new CollectionItem(item.name(), item.series(), item.number(), form.parse(item.dateReleased()), form.parse(item.dateOfAcquisition()), item.productionRun());
+                    Item newItem = new Item();
+                    newItem.setcollection(item.collectionName());
+                    newItem.setName(item.name());
+                    newItem.setSeries(item.series());
+                    newItem.setNumber(item.number());
+                    newItem.setDatereleased(item.dateReleased());
+                    newItem.setDateOfAcquisition(item.dateOfAcquisition());
+                    newItem.setProductionRun(item.productionRun());
+                    System.out.println("Persisting: " + newItem);
+                    this.collectionRepository.save(newItem);
                     i.collectionList.add(item);
                     System.out.println("Added " + item.name() + " to " + i.name);
                     return item;
                 }
                 catch(Exception e){
-                    System.out.println("Uanble to parse date");
+                    System.out.println("Uanble to parse date or save to repository");
                 }
             }
         }
