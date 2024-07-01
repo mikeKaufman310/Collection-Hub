@@ -18,6 +18,12 @@ From root directory, run the following command...
 RUN brew services start postgresql &&
 psql postgres
 ```
+Or...
+```
+RUN psql postgres
+```
+If PostgreSQL is already running on your server.
+
 
 **Back-end**
 
