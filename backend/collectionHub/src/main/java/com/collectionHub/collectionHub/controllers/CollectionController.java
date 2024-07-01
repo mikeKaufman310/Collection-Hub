@@ -159,7 +159,7 @@ public class CollectionController{
     }
 
     /**
-     * Rest Delete mapping to remove item from a specified collection IMPORTANT NOTE: need to added persistence update to this function
+     * Rest Delete mapping to remove item from a specified collection 
      * @param item collection item to be deleted
      * @return collection item obejct that was deleted
      */
@@ -168,6 +168,11 @@ public class CollectionController{
     public CollectionItem removeItem(@RequestBody CollectionItem item){
         for(Collection i : collectionsList){
             if(i.name.equals(item.collectionName()) && i.collectionList.contains(item)){
+                for(Item j: this.databaseItems){//remove from database
+                    if(i.name.equals(j.getcollection()) && item.name().equals(j.getName())){
+                        this.collectionRepository.deleteById(j.getid());
+                    }
+                }
                 i.collectionList.remove(item);
                 System.out.println("Removed " + item.name() + " from collection " + item.collectionName());
                 return item;
