@@ -14,8 +14,8 @@ export default function Home(){
               </h1>
             </div>
             <div className={styles.right}>
-              <CollectionButton/>
               <AddCollectionButton/>
+              <CollectionButton/>
             </div>
         </div>
     );
@@ -28,7 +28,7 @@ function AddCollectionButton(){
   };
   return(
     <div>
-      <button onClick={goToAddCollection}>Add Collection</button>
+      <button onClick={goToAddCollection}  className={styles.button}>Add Collection</button>
     </div>
   );
 }
@@ -58,11 +58,9 @@ function CollectionButton(){
     }
     return(
       <div>
-        <ul>
           {data.map((element, index) => (
-            <button key={index} onClick={() => navigate('/viewCollection', {state:{element}})}>{element.name/**.substring(15,element.name.length - 2)**/}</button>
+            <button key={index} onClick={() => navigate('/viewCollection', {state:{element}})} className={styles.collectionButton}>{element.name/**.substring(15,element.name.length - 2)**/}</button>
           ))}
-        </ul>
       </div>
     );
 }
