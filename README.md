@@ -1,5 +1,5 @@
 # Collection-Hub
-A solution to what collectibles you own and desire
+A solution to tracking what collectibles you own and desire
 
 ***Tech Stack***
 
