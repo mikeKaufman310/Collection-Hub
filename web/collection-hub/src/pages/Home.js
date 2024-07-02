@@ -1,17 +1,22 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import styles from './Home.module.css';
 
 const BACKEND_PORT = 8080;
 
-export default function Home(){
+export default function Home(){ 
     console.log("Navigated Home");
     return(
-        <div>
-            <h1>
-                Welcome to CollectionHub!
-            </h1>
-            <CollectionButton/>
-            <AddCollectionButton/>
+        <div className={styles.container}>
+            <div className={styles.left}>
+              <h1 className={styles.header}>
+                  CollectionHub
+              </h1>
+            </div>
+            <div className={styles.right}>
+              <CollectionButton/>
+              <AddCollectionButton/>
+            </div>
         </div>
     );
 }
