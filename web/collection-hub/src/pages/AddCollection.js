@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import styles from './AddCollection.module.css';
 
 const BACKEND_PORT = 8080;
 
@@ -34,10 +35,14 @@ export default function AddCollection(){
     };
 
     return(
-        <div>
-            <button onClick={goToHome}>Home</button>
-            <input type="text"  placeholder="Name" value={inputValue} onChange={handleChange}/>
-            <button onClick={addNewCollection}>Start Collection</button>
+        <div className={styles.container}>
+            <div className={styles.centerContainer}>
+              <button onClick={goToHome} className={styles.button}>Home</button>
+              <div className={styles.buttonAndInput}>
+                <input type="text"  placeholder="Name" value={inputValue} onChange={handleChange} className={styles.input}/>
+                <button onClick={addNewCollection} className={styles.startButton}>Start Collection</button>
+              </div>
+            </div>
         </div>
     );
 }
