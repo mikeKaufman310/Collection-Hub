@@ -1,5 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import {useState} from 'react';
+import styles from './Collection.module.css';
 
 const BACKEND_PORT = 8080;
 export default function Collection(){
@@ -57,26 +58,32 @@ export default function Collection(){
 
     if(data.length === 0){
         return(
-            <div>
-                <button onClick={goHome}>Home</button>
-                <button onClick={()=>navigate('/addItem', {state:{collectionName}})}>Add Item</button>
-                <button onClick={deleteCollection}>Delete Collection</button>
-                <h1>{collectionName}</h1>
+            <div className={styles.container}>
+                <div className={styles.left}>
+                    <button onClick={goHome} className={styles.button}>Home</button>
+                    <button onClick={()=>navigate('/addItem', {state:{collectionName}})} className={styles.button}>Add Item</button>
+                    <button onClick={deleteCollection} className={styles.button}>Delete Collection</button>
+                </div>
+                <div className={styles.right}>
+                    <h1 className={styles.header}>{collectionName}</h1>
+                </div>
             </div>
         );
-    }
+    } 
 
     return(
-        <div>
-            <button onClick={goHome}>Home</button>
-            <button onClick={()=>navigate('/addItem', {state:{collectionName}})}>Add Item</button>
-            <button onClick={deleteCollection}>Delete Collection</button>
-            <h1>{collectionName}</h1>
-            <ul>
+        <div className={styles.container}>
+            <div className={styles.left}>
+                <button onClick={goHome} className={styles.button}>Home</button>
+                <button onClick={()=>navigate('/addItem', {state:{collectionName}})} className={styles.button}>Add Item</button>
+                <button onClick={deleteCollection} className={styles.button}>Delete Collection</button>
                 {data.collectionList.map((element, index)=> (
-                    <button key={index} onClick={() => navigate('/viewItem', {state: {element}})}>{element.name}</button>
+                    <button key={index} onClick={() => navigate('/viewItem', {state: {element}})} className={styles.itemButton}>{element.name}</button>
                 ))}
-            </ul>
+            </div>
+            <div className={styles.right}>
+                <h1 className={styles.header}>{collectionName}</h1>
+            </div>
         </div>
     );
 }
