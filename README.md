@@ -38,6 +38,12 @@ RUN cd backend/collectionHub &&
 ./mvnw spring-boot:run
 ```
 
+To run the backend unit tests, from the root directory, run the following command...
+```
+RUN cd backend/collectionHub &&
+mvn test
+```
+
 
 **Web Front-end**
 

@@ -16,13 +16,17 @@ public class Collection{
         collectionList = new ArrayList<>();
         name = null;
     }
-
+ 
     /**
      * Constructor
      */
     public Collection(Collection oldCollection){
         this.collectionList = oldCollection.collectionList;
-        this.name = "New " + oldCollection.name;
+        if(oldCollection.name == null){
+            this.name = "New collection";
+        }else{
+            this.name = "New " + oldCollection.name;
+        }
     }
 
     /**
