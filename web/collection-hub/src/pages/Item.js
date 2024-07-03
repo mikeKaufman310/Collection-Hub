@@ -34,12 +34,17 @@ export default function Item(){
         navigate('/viewCollection', {state: {element}});
     };
 
+    const navigateBack = () => {
+        element.name = collectionName;
+        navigate('/viewCollection', {state: {element}});
+    }
+
     return(
         <div className={styles.container}>
             <div className={styles.centerContainer}>
                 <div className={styles.buttonAndDescription}>
                     <button onClick={() => navigate('/')} className={styles.button}>Home</button>
-                    <button className={styles.button}>Back</button>
+                    <button onClick={navigateBack} className={styles.button}>Back</button>
                     <button onClick={deleteItem} className={styles.button}>Delete Item</button>
                     <h1 className={styles.header}>{itemName}</h1>
                     <ul>
