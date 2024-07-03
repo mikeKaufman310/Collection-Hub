@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import styles from './AddItem.module.css';
 
 const BACKEND_PORT = 8080;
 
@@ -11,10 +12,10 @@ export default function AddItem(){
     const {collectionName} = location.state || {};
     const [inputValueName, setValueName] = useState('');
     const [inputValueSeries, setValueSeries] = useState('');
-    const [inputValueNumber, setValueNumber] = useState(0);
+    const [inputValueNumber, setValueNumber] = useState('');
     const [inputValueDR, setValueDR] = useState('');
     const [inputValueDA, setValueDA] = useState('');
-    const [inputValuePR, setValuePR] = useState(0);
+    const [inputValuePR, setValuePR] = useState('');
     const handleChangeName = (event) => {
         setValueName(event.target.value);
     };
@@ -60,14 +61,18 @@ export default function AddItem(){
         };
 
     return(
-        <div>
-            <input type="text" placeholder="Name" value={inputValueName} onChange={handleChangeName}/>
-            <input type="text" placeholder="Series (Optional)" value={inputValueSeries} onChange={handleChangeSeries}/>
-            <input type="text" placeholder="Number (Optional)" value={inputValueNumber} onChange={handleChangeNumber}/>
-            <input type="text" placeholder="Date of Release (MM/DD/YY) (Optional)" value={inputValueDR} onChange={handleChangeDR}/>
-            <input type="text" placeholder="Date of Acquisition (MM/DD/YY) (Optional)" value={inputValueDA} onChange={handleChangeDA}/>
-            <input type="text" placeholder="Production Run (Optional)" value={inputValuePR} onChange={handleChangePR}/>
-            <button onClick={addItem}>Add Item</button>
+        <div className={styles.container}>
+            <div className={styles.centerContainer}>
+                <div className={styles.buttonAndInput}>
+                    <input type="text" placeholder="Name" value={inputValueName} onChange={handleChangeName} className={styles.input}/>
+                    <input type="text" placeholder="Series (Optional)" value={inputValueSeries} onChange={handleChangeSeries} className={styles.input}/>
+                    <input type="text" placeholder="Number (Optional)" value={inputValueNumber} onChange={handleChangeNumber} className={styles.input}/>
+                    <input type="text" placeholder="Date of Release (MM/DD/YY) (Optional)" value={inputValueDR} onChange={handleChangeDR} className={styles.input}/>
+                    <input type="text" placeholder="Date of Acquisition (MM/DD/YY) (Optional)" value={inputValueDA} onChange={handleChangeDA} className={styles.input}/>
+                    <input type="text" placeholder="Production Run (Optional)" value={inputValuePR} onChange={handleChangePR} className={styles.input}/>
+                    <button onClick={addItem} className={styles.button}>Add Item</button>
+                </div>
+            </div>
         </div>
     );
 }
