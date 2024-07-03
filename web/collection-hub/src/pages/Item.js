@@ -1,4 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom";
+import styles from './Item.module.css';
 
 const BACKEND_PORT = 8080;
 
@@ -34,19 +35,23 @@ export default function Item(){
     };
 
     return(
-        <div>
-            <button onClick={() => navigate('/')}>Home</button>
-            <button>Back</button>
-            <button onClick={deleteItem}>Delete Item</button>
-            <h1>{itemName}</h1>
-            <ul>
-                <li>Collection: {collectionName}</li>
-                <li>Series: {series}</li>
-                <li>Number: {number}</li>
-                <li>Release Date: {releaseDate}</li>
-                <li>Acquisition Date: {acquiDate}</li>
-                <li>Production Run: {prodRun}</li>
-            </ul>
+        <div className={styles.container}>
+            <div className={styles.centerContainer}>
+                <div className={styles.buttonAndDescription}>
+                    <button onClick={() => navigate('/')} className={styles.button}>Home</button>
+                    <button className={styles.button}>Back</button>
+                    <button onClick={deleteItem} className={styles.button}>Delete Item</button>
+                    <h1 className={styles.header}>{itemName}</h1>
+                    <ul>
+                        <li className={styles.info}>Collection: {collectionName}</li>
+                        <li className={styles.info}>Series: {series}</li>
+                        <li className={styles.info}>Number: {number}</li>
+                        <li className={styles.info}>Release Date: {releaseDate}</li>
+                        <li className={styles.info}>Acquisition Date: {acquiDate}</li>
+                        <li className={styles.info}>Production Run: {prodRun}</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     );
 }
