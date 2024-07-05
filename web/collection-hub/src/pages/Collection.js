@@ -42,6 +42,12 @@ export default function Collection(){
     console.log("Recieved " + collectionName +" data from server");
 
     const deleteCollection = async() => {
+        setShowWarning(true);
+    };
+
+    const [showWarning, setShowWarning] = useState(false);
+
+    const handleYes = async () => {
         const response = await fetch(`http://localhost:${BACKEND_PORT}/allCollections`,{
             method: 'DELETE',
             headers: {
@@ -49,12 +55,16 @@ export default function Collection(){
             },
             body: JSON.stringify(collectionName)
         });
-
+        
         const data = await response.json();
         console.log("Sent item " + collectionName + " to be deleted");
         console.log(data);
         navigate('/');
-    };
+    }
+
+    const handleNo = () => {
+        setShowWarning(false);
+    }
 
     if(data.length === 0){
         return(
@@ -63,6 +73,17 @@ export default function Collection(){
                     <button onClick={goHome} className={styles.button}>Home</button>
                     <button onClick={()=>navigate('/addItem', {state:{collectionName}})} className={styles.button}>Add Item</button>
                     <button onClick={deleteCollection} className={styles.button}>Delete Collection</button>
+                    { showWarning && (
+                    <div className={styles.warning}>
+                        <div className={styles.warningContent}>
+                            <h1>Are you sure you want to delete this collection?</h1>
+                            <div>
+                                <button className={styles.button} onClick={handleYes}>Yes</button>
+                                <button className={styles.button} onClick={handleNo}>No</button>
+                            </div>
+                        </div>
+                    </div>
+                    )}
                 </div>
                 <div className={styles.right}>
                     <h1 className={styles.header}>{collectionName}</h1>
@@ -77,6 +98,17 @@ export default function Collection(){
                 <button onClick={goHome} className={styles.button}>Home</button>
                 <button onClick={()=>navigate('/addItem', {state:{collectionName}})} className={styles.button}>Add Item</button>
                 <button onClick={deleteCollection} className={styles.button}>Delete Collection</button>
+                { showWarning && (
+                <div className={styles.warning}>
+                    <div className={styles.warningContent}>
+                        <h1>Are you sure you want to delete this collection?</h1>
+                        <div>
+                            <button className={styles.button} onClick={handleYes}>Yes</button>
+                            <button className={styles.button} onClick={handleNo}>No</button>
+                        </div>
+                    </div>
+                </div>
+                )}
                 {data.collectionList.map((element, index)=> (
                     <button key={index} onClick={() => navigate('/viewItem', {state: {element}})} className={styles.itemButton}>{element.name}</button>
                 ))}
