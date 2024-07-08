@@ -3,7 +3,7 @@ A solution to tracking what collectibles you own and desire
 
 ***Demo***
 
-[![CollectionHub Demo](https://i9.ytimg.com/vi_webp/yAy1i4QA6D8/mq2.webp?sqp=COjRoLQG-oaymwEmCMACELQB8quKqQMa8AEB-AHaCYAC0AWKAgwIABABGGsgayhrMA8=&rs=AOn4CLCbsRYQfFAf83jh8UMWGB0TRX4qMw)](https://youtu.be/yAy1i4QA6D8)
+[![CollectionHub Demo](homescreen.jpg)](https://youtu.be/yAy1i4QA6D8)
 
 ***Tech Stack***
 
