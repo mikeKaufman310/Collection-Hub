@@ -52,3 +52,9 @@ From root directory, run the following command...
 RUN cd web/collection-hub &&
 npm start
 ```
+
+***Design***
+
+**Relational Schema**
+
+![](design/db_schema/itemsSchema.pdf)
