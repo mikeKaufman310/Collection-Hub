@@ -1,7 +1,7 @@
 # Collection-Hub
 A solution to tracking what collectibles you own and desire
 
-***Demo***
+***Video Demo***
 
 [![CollectionHub Demo](homescreen.jpg)](https://youtu.be/yAy1i4QA6D8)
 
