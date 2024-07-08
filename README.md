@@ -58,3 +58,7 @@ npm start
 **Relational Schema**
 
 ![](design/db_schema/itemsSchema.pdf)
+
+**Home Sequence**
+
+![](design/flow/CollectionHubHomePageSequence.drawio.png)
