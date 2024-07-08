@@ -59,6 +59,6 @@ npm start
 
 ![](design/db_schema/itemsSchema.pdf)
 
-**Home Sequence**
+**Home Page Sequence**
 
 ![](design/flow/CollectionHubHomePageSequence.drawio.png)
