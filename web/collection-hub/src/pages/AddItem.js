@@ -4,38 +4,42 @@ import styles from './AddItem.module.css';
 
 const BACKEND_PORT = 8080;
 
+/**
+ * Add Item Page React Component
+ * @returns React Component of Add Item Page
+ */
 export default function AddItem(){
-    console.log("Navigated to Add Item page");
+    console.log("Navigated to Add Item page");//logging
 
-    const navigate = useNavigate();
-    const location = useLocation();
-    const {collectionName} = location.state || {};
-    const [inputValueName, setValueName] = useState('');
-    const [inputValueSeries, setValueSeries] = useState('');
-    const [inputValueNumber, setValueNumber] = useState('');
-    const [inputValueDR, setValueDR] = useState('');
-    const [inputValueDA, setValueDA] = useState('');
-    const [inputValuePR, setValuePR] = useState('');
-    const handleChangeName = (event) => {
+    const navigate = useNavigate();//navigation lambda
+    const location = useLocation();//location lambda to use passed page state
+    const {collectionName} = location.state || {};//collection name from passed page state
+    const [inputValueName, setValueName] = useState('');//item name state
+    const [inputValueSeries, setValueSeries] = useState('');//series name state
+    const [inputValueNumber, setValueNumber] = useState('');//number state
+    const [inputValueDR, setValueDR] = useState('');//date of release state
+    const [inputValueDA, setValueDA] = useState('');//date of acquisition state
+    const [inputValuePR, setValuePR] = useState('');//production run state
+    const handleChangeName = (event) => {//name change lambda
         setValueName(event.target.value);
     };
-    const handleChangeSeries = (event) => {
+    const handleChangeSeries = (event) => {//series change lambda
         setValueSeries(event.target.value);
     };
-    const handleChangeNumber = (event) => {
+    const handleChangeNumber = (event) => {//number change lambda
         setValueNumber(event.target.value);
     };
-    const handleChangeDR = (event) => {
+    const handleChangeDR = (event) => {//date of release change lambda
         setValueDR(event.target.value);
     };
-    const handleChangeDA = (event) => {
+    const handleChangeDA = (event) => {//date of acquisition change lambda
         setValueDA(event.target.value);
     };
-    const handleChangePR = (event) => {
+    const handleChangePR = (event) => {//production run change lambda
         setValuePR(event.target.value);
     };
-    const element = {name: collectionName};//bc of parsing in collection component
-    const jsonFormData = {
+    const element = {name: collectionName};//create page state anonymous object for parsing in collection component
+    const jsonFormData = {//json form to be body of rest call to backend
         collectionName: collectionName,
         name: inputValueName,
         series: inputValueSeries,
@@ -44,8 +48,10 @@ export default function AddItem(){
         dateOfAcquisition: inputValueDA,
         productionRun: inputValuePR
     };
-    //console.log(JSON.stringify(jsonFormData));//for debugging
+
+    //add item lambda
     const addItem = async() => {
+        //rest post call to backend
         const response = await fetch(`http://localhost:${BACKEND_PORT}/addToCollections`, {
                method: 'POST',
                 headers: {
@@ -55,11 +61,12 @@ export default function AddItem(){
             });
 
             const data = await response.json();
-            console.log("Sent item " + inputValueName + " to be added to " + collectionName);
+            console.log("Sent item " + inputValueName + " to be added to " + collectionName);//logging
             console.log(data);
             navigate('/viewCollection', {state:{element}});
         };
 
+    //return react component
     return(
         <div className={styles.container}>
             <div className={styles.centerContainer}>

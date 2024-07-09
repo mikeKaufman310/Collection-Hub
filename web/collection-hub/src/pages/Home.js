@@ -4,8 +4,14 @@ import styles from './Home.module.css';
 
 const BACKEND_PORT = 8080;
 
+/**
+ * Home Page React Component
+ * @returns React Component of Homee Page
+ */
 export default function Home(){ 
-    console.log("Navigated Home");
+    console.log("Navigated Home");//logging
+
+    //return react component
     return(
         <div className={styles.container}>
             <div className={styles.left}>
@@ -21,11 +27,17 @@ export default function Home(){
     );
 }
 
+/**
+ * Add Collection Button React Component
+ * @returns React Component of add collection button
+ */
 function AddCollectionButton(){
-  const navigate = useNavigate();
-  const goToAddCollection = () => {
+  const navigate = useNavigate();//navigation lambda
+  const goToAddCollection = () => {//got to add collection page lambda
     navigate('/addCollection');
   };
+
+  //return react component
   return(
     <div>
       <button onClick={goToAddCollection}  className={styles.button}>Add Collection</button>
@@ -33,10 +45,15 @@ function AddCollectionButton(){
   );
 }
   
-  
+/**
+ * Collection Button React Component
+ * @returns React Component of Collection button
+ */
 function CollectionButton(){
-    const [data, setData] = useState([]);
-    const navigate = useNavigate();
+    const [data, setData] = useState([]);//data state that will be return of future rest call
+    const navigate = useNavigate();//navigation lambda
+
+    //rest get call to backend
     useEffect(()=>{
     const xhr = new XMLHttpRequest();
     xhr.open('GET', `http://localhost:${BACKEND_PORT}/allCollections`);
@@ -48,9 +65,9 @@ function CollectionButton(){
     xhr.send();
     }, []);
     
-    console.log("Recieved collection data from server");
-    console.log(data);//for deubgging
+    console.log("Recieved collection data from server");//logging
   
+    //cases for returning a react component
     if(data.length === 0){
       return(
         <div></div>
@@ -58,7 +75,7 @@ function CollectionButton(){
     }
     return(
       <div>
-          {data.map((element, index) => (
+          {data.map((element, index) => (//iterate through data of returned json list and map to html components
             <button key={index} onClick={() => navigate('/viewCollection', {state:{element}})} className={styles.collectionButton}>{element.name/**.substring(15,element.name.length - 2)**/}</button>
           ))}
       </div>
