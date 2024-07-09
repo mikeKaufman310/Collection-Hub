@@ -9,9 +9,15 @@ import java.util.ArrayList;
 import com.collectionHub.collectionHub.types.Collection;
 import com.collectionHub.collectionHub.types.CollectionItem;
 
+/**
+ * Class to test collection object type
+ */
 @SpringBootTest
 class CollectionTests{
 
+    /**
+     * Test to test empty constructor
+     */
     @Test
     void emptyConstructor(){
         Collection col = new Collection();
@@ -19,6 +25,9 @@ class CollectionTests{
         assertTrue(col.collectionList.size() == 0, "Size of collection list field was not zero when using empty constructor");
     }
 
+    /**
+     * Test to test constructor that passes another collection object
+     */
     @Test
     void oldCollectionConstructor(){
         Collection old1 = new Collection();
@@ -37,6 +46,9 @@ class CollectionTests{
         assertTrue(newCol3.name.equals("New old2"));
     }
 
+    /**
+     * Test to test constructor with pass collection item record
+     */
     @Test
     void firstPieceConstructor(){
         CollectionItem piece1 = new CollectionItem("col1", "piece1", null, null, null, null, null);
@@ -50,6 +62,9 @@ class CollectionTests{
         assertNull(col1.name);
     }
 
+    /**
+     * Test to test constructor with passed string
+     */
     @Test
     void nameConstructor(){
         Collection col1 = new Collection("col1");
@@ -60,6 +75,9 @@ class CollectionTests{
         assertTrue(col1.name.equals(""));
     }
 
+    /**
+     * Test to test constructor with collection item and string passed
+     */
     @Test
     void pieceAndNameConstructor(){
         Collection col1 = new Collection(new CollectionItem(null, null, null, null, null, null, null), "col1");
@@ -67,6 +85,9 @@ class CollectionTests{
         assertTrue(col1.name.equals("col1"));
     }
 
+    /**
+     * Test to test constructor with collection object and string passed
+     */
     @Test
     void oldCollectionAndNameConstructor(){
         Collection old1 = new Collection(new CollectionItem(null, null, null, null, null, null, null), "old1");
@@ -76,6 +97,9 @@ class CollectionTests{
         assertTrue(new1.name.equals("new1"));
     }
 
+    /**
+     * Test to test constructor with list collection object and string passed
+     */
     @Test
     void listAndNameConstructor(){
         ArrayList<CollectionItem> list = new ArrayList<>();

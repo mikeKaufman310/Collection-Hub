@@ -20,24 +20,34 @@ import com.collectionHub.collectionHub.entity.Item;
 import com.collectionHub.collectionHub.repository.ItemRepository;
 import com.collectionHub.collectionHub.types.CollectionItem;
 
+/**
+ * Class to test collection controller unit test suite
+ */
 @WebMvcTest(CollectionController.class)
 class CollectionControllerTests{
 
+    //mock caller of rest api endpoints
     @Autowired
     private MockMvc mockMvc;
 
-    //@Autowired
-    //private ObjectMapper objectMapper;
-
+    //mock jpa repository
     @MockBean
     private ItemRepository itemRepo;
 
+    /**
+     * Test to test rest get call for all the collections
+     * @throws Exception concurrent modification exception
+     */
     @Test
     void testAllCollections() throws Exception{
         when(itemRepo.findAll()).thenReturn(new ArrayList<>());
         mockMvc.perform(get("/allCollections")).andExpect(status().isOk());
     }
 
+    /**
+     * Test to test rest call for rest post to get a collection
+     * @throws Exception concurrent modification exception
+     */
     @Test
     void testGetCollection() throws Exception{
         String collectionName = "collection";
@@ -46,15 +56,22 @@ class CollectionControllerTests{
         mockMvc.perform(post("/getCollection").contentType(MediaType.APPLICATION_JSON).content(collectionName)).andExpect(status().isOk());
     }
 
+    /**
+     * Test to test rest delete to delete a collection
+     * @throws Exception concurrent modification exception
+     */
     @Test
     void testDeleteCollection() throws Exception{
         String collectionName = "collection";
         when(itemRepo.findAll()).thenReturn(new ArrayList<>());
         mockMvc.perform(get("/allCollections"));
-        //when(itemRepo.deleteById()).
         mockMvc.perform(delete("/allCollections").contentType(MediaType.APPLICATION_JSON).content(collectionName)).andExpect(status().isOk());
     }
 
+    /**
+     * Test to test rest post to add a collection
+     * @throws Exception concurrent modification exception
+     */
     @Test
     void testAddCollection() throws Exception{
         String collectionName = "collection";
@@ -63,6 +80,10 @@ class CollectionControllerTests{
         mockMvc.perform(post("/allCollections").contentType(MediaType.APPLICATION_JSON).content(collectionName)).andExpect(status().isOk());
     }
 
+    /**
+     * Test to test rest post to add an item to a collection
+     * @throws Exception concurrent modification exception
+     */
     @Test
     void testAddItemToCollection() throws Exception{
         when(itemRepo.findAll()).thenReturn(new ArrayList<>());
@@ -76,6 +97,10 @@ class CollectionControllerTests{
         mockMvc.perform(post("/addToCollections").contentType(MediaType.APPLICATION_JSON).content("{\"collectionName\": \"ollectio\", \"name\": \"\", \"series\": \"\", \"number\": null, \"dateReleased\": \"\", \"dateOfAcquisition\": \"\", \"productionRun\": null}")).andExpect(status().isOk()); 
     }
 
+    /**
+     * Test to test rest delete to remove an item from a collection
+     * @throws Exception concurrent modification exception
+     */
     @Test
     void testRemoveItem() throws Exception{
         when(itemRepo.findAll()).thenReturn(new ArrayList<>());
