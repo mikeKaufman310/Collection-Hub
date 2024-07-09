@@ -66,3 +66,11 @@ npm start
 **View Collection Page Sequence**
 
 ![](design/flow/ViewCollectionPageSequence.drawio.png)
+
+**Add Collection Page Sequence**
+
+![](design/flow/AddCollectionPageSequence.drawio.png)
+
+**Add Item Page Sequence**
+
+![](design/flow/AddItemPageSequence.drawio.png)
