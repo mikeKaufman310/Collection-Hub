@@ -62,3 +62,7 @@ npm start
 **Home Page Sequence**
 
 ![](design/flow/CollectionHubHomePageSequence.drawio.png)
+
+**View Collection Page Sequence**
+
+![](design/flow/ViewCollectionPageSequence.drawio.png)
