@@ -3,23 +3,28 @@ import {useState} from 'react';
 import styles from './Collection.module.css';
 
 const BACKEND_PORT = 8080;
+
+/**
+ * Collection React Component to display collection page
+ */
 export default function Collection(){
        
-    const location = useLocation();    
-    const {element} = location.state || {};
-    const collectionName = element.name/**.substring(15,element.name.length - 2)**/;
+    const location = useLocation();//page location    
+    const {element} = location.state || {};//passed page state aka props
+    const collectionName = element.name;//name of collection
 
-    console.log("Navigated to " + collectionName + " page"); 
+    console.log("Navigated to " + collectionName + " page");//logging
 
-    const navigate = useNavigate();
-    const goHome = () => {
+    const navigate = useNavigate();//navigate lambda
+    const goHome = () => {//go home lambda
         navigate('/');
     };
     
 
-    const [data, setData] = useState([]);
-    const [trigger, setTrigger] = useState(false);
+    const [data, setData] = useState([]);//data state
+    const [trigger, setTrigger] = useState(false);//trigger for button click
     
+    //post to get collection to be displayed on page
     const xhr = new XMLHttpRequest();
     xhr.open('POST', `http://localhost:${BACKEND_PORT}/getCollection`, true);
     xhr.onreadystatechange = function() {
@@ -39,14 +44,16 @@ export default function Collection(){
     xhr.send(JSON.stringify(collectionName));
     
     
-    console.log("Recieved " + collectionName +" data from server");
+    console.log("Recieved " + collectionName +" data from server");//logging
 
+    //delete collection lambda
     const deleteCollection = async() => {
         setShowWarning(true);
     };
 
-    const [showWarning, setShowWarning] = useState(false);
+    const [showWarning, setShowWarning] = useState(false);//delete warning state
 
+    //lambda for confirmation of collection delete
     const handleYes = async () => {
         const response = await fetch(`http://localhost:${BACKEND_PORT}/allCollections`,{
             method: 'DELETE',
@@ -62,10 +69,12 @@ export default function Collection(){
         navigate('/');
     }
 
+    //handle no choice in warning lambda
     const handleNo = () => {
         setShowWarning(false);
     }
 
+    //html component if collection has no items
     if(data.length === 0){
         return(
             <div className={styles.container}>
@@ -92,6 +101,7 @@ export default function Collection(){
         );
     } 
 
+    //default collection html component
     return(
         <div className={styles.container}>
             <div className={styles.left}>
