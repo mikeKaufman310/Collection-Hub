@@ -8,3 +8,15 @@ test('contains header', ()=>{
     const headerElement = screen.getByText(/CollectionHub/i);
     expect(headerElement).toBeInTheDocument();
 });
+
+test('contains add collection button', ()=>{
+    renderWithRouter(<Home />);
+    const addCollectionButton = screen.getByTestId('addCollectionButton');
+    expect(addCollectionButton).toBeInTheDocument();
+});
+
+test('contains collection button', ()=>{
+    renderWithRouter(<Home />);
+    const collectionButton = screen.getByTestId('collectionButton');
+    expect(collectionButton).toBeInTheDocument();
+})

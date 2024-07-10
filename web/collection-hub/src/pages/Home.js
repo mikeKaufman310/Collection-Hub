@@ -39,7 +39,7 @@ function AddCollectionButton(){
 
   //return react component
   return(
-    <div>
+    <div data-testid='addCollectionButton'>
       <button onClick={goToAddCollection}  className={styles.button}>Add Collection</button>
     </div>
   );
@@ -70,11 +70,11 @@ function CollectionButton(){
     //cases for returning a react component
     if(data.length === 0){
       return(
-        <div></div>
+        <div data-testid='collectionButton'></div>
       );
     }
     return(
-      <div>
+      <div data-testid='collectionButton'>
           {data.map((element, index) => (//iterate through data of returned json list and map to html components
             <button key={index} onClick={() => navigate('/viewCollection', {state:{element}})} className={styles.collectionButton}>{element.name/**.substring(15,element.name.length - 2)**/}</button>
           ))}

@@ -53,6 +53,13 @@ RUN cd web/collection-hub &&
 npm start
 ```
 
+To run the web frontend unit test, from the root directory, run the following command...
+```
+RUN cd web/colleection-hub &&
+npm test
+```
+
+
 ***Design***
 
 **Relational Schema**
