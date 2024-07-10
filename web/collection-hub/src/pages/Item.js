@@ -4,11 +4,15 @@ import { useState } from "react";
 
 const BACKEND_PORT = 8080;
 
-export default function Item(){
-    console.log("Navigated to Item page");
+/**
+ * Item Page React Component
+ * @returns React Component of Item Page
+ */
+export default function Item(){ 
+    console.log("Navigated to Item page");//logging
 
-    const location = useLocation();
-    const {element} = location.state || {};
+    const location = useLocation();//location for page state
+    const {element} = location.state || {};//passed page state
     const collectionName = element.collectionName;
     const itemName = element.name;
     const series = element.series;
@@ -17,20 +21,22 @@ export default function Item(){
     const acquiDate = element.dateOfAcqusition;
     const prodRun = element.productionRun;
 
-    const navigate = useNavigate();
+    const navigate = useNavigate();//navigation lambda
 
-    const deleteItem = async () => {
+    const deleteItem = async () => {//delete item click button lambda
         setShowWarning(true);
     };
 
-    const navigateBack = () => {
+    const navigateBack = () => {//navigate back to parent collection lambda
         element.name = collectionName;
         navigate('/viewCollection', {state: {element}});
     }
 
-    const [showWarning, setShowWarning] = useState(false);
+    const [showWarning, setShowWarning] = useState(false);//show warning state
 
+    //lambda to handle yes click to warning box
     const handleYes = async () => {
+        //rest delete to backend
         const response = await fetch(`http://localhost:${BACKEND_PORT}/deleteFromCollections`, {
             method: 'DELETE',
             headers: {
@@ -40,16 +46,17 @@ export default function Item(){
         });
 
         const data = await response.json();
-        console.log("Deleted " + itemName);
+        console.log("Deleted " + itemName);//logging
         console.log(data);
         element.name = collectionName;//for how collection uses this data
         navigate('/viewCollection', {state: {element}});
     }
 
-    const handleNo = () => {
+    const handleNo = () => {//lambda for when no button is clicked in warning box
         setShowWarning(false);
     }
 
+    //return react component
     return(
         <div className={styles.container}>
             <div className={styles.centerContainer}>
@@ -57,7 +64,7 @@ export default function Item(){
                     <button onClick={() => navigate('/')} className={styles.button}>Home</button>
                     <button onClick={navigateBack} className={styles.button}>Back</button>
                     <button onClick={deleteItem} className={styles.button}>Delete Item</button>
-                    { showWarning && (
+                    { showWarning && (//show warning box if showWarning state dictates so
                     <div className={styles.warning}>
                         <div className={styles.warningContent}>
                             <h1>Are you sure you want to delete this item from the collection?</h1>
