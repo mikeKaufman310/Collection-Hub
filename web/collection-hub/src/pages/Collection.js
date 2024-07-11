@@ -80,10 +80,10 @@ export default function Collection(){
             <div className={styles.container}>
                 <div className={styles.left}>
                     <button data-testid='homeButton' onClick={goHome} className={styles.button}>Home</button>
-                    <button onClick={()=>navigate('/addItem', {state:{collectionName}})} className={styles.button}>Add Item</button>
-                    <button onClick={deleteCollection} className={styles.button}>Delete Collection</button>
+                    <button data-testid='addItemButton' onClick={()=>navigate('/addItem', {state:{collectionName}})} className={styles.button}>Add Item</button>
+                    <button data-testid='deleteButton' onClick={deleteCollection} className={styles.button}>Delete Collection</button>
                     { showWarning && (
-                    <div className={styles.warning}>
+                    <div data-testid='warning' className={styles.warning}>
                         <div className={styles.warningContent}>
                             <h1>Are you sure you want to delete this collection?</h1>
                             <div>
@@ -94,7 +94,7 @@ export default function Collection(){
                     </div>
                     )}
                 </div>
-                <div className={styles.right}>
+                <div data-testid='header' className={styles.right}>
                     <h1 className={styles.header}>{collectionName}</h1>
                 </div>
             </div>
@@ -106,10 +106,10 @@ export default function Collection(){
         <div className={styles.container}>
             <div className={styles.left}>
                 <button data-testid='homeButton' onClick={goHome} className={styles.button}>Home</button>
-                <button onClick={()=>navigate('/addItem', {state:{collectionName}})} className={styles.button}>Add Item</button>
-                <button onClick={deleteCollection} className={styles.button}>Delete Collection</button>
+                <button data-testid='addItemButton' onClick={()=>navigate('/addItem', {state:{collectionName}})} className={styles.button}>Add Item</button>
+                <button data-testid='deleteButton' onClick={deleteCollection} className={styles.button}>Delete Collection</button>
                 { showWarning && (
-                <div className={styles.warning}>
+                <div data-testid='warning' className={styles.warning}>
                     <div className={styles.warningContent}>
                         <h1>Are you sure you want to delete this collection?</h1>
                         <div>
@@ -123,7 +123,7 @@ export default function Collection(){
                     <button key={index} onClick={() => navigate('/viewItem', {state: {element}})} className={styles.itemButton}>{element.name}</button>
                 ))}
             </div>
-            <div className={styles.right}>
+            <div data-testid='header' className={styles.right}>
                 <h1 className={styles.header}>{collectionName}</h1>
             </div>
         </div>
