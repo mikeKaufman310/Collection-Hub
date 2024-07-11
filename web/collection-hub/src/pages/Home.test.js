@@ -1,5 +1,4 @@
 import Home from "./Home";
-//import App from "./App";
 import {screen} from '@testing-library/react';
 import renderWithRouter from '../test-utils'
 

@@ -79,7 +79,7 @@ export default function Collection(){
         return(
             <div className={styles.container}>
                 <div className={styles.left}>
-                    <button onClick={goHome} className={styles.button}>Home</button>
+                    <button data-testid='homeButton' onClick={goHome} className={styles.button}>Home</button>
                     <button onClick={()=>navigate('/addItem', {state:{collectionName}})} className={styles.button}>Add Item</button>
                     <button onClick={deleteCollection} className={styles.button}>Delete Collection</button>
                     { showWarning && (
@@ -105,7 +105,7 @@ export default function Collection(){
     return(
         <div className={styles.container}>
             <div className={styles.left}>
-                <button onClick={goHome} className={styles.button}>Home</button>
+                <button data-testid='homeButton' onClick={goHome} className={styles.button}>Home</button>
                 <button onClick={()=>navigate('/addItem', {state:{collectionName}})} className={styles.button}>Add Item</button>
                 <button onClick={deleteCollection} className={styles.button}>Delete Collection</button>
                 { showWarning && (
