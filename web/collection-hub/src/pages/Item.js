@@ -63,9 +63,9 @@ export default function Item(){
                 <div className={styles.buttonAndDescription}>
                     <button onClick={() => navigate('/')} className={styles.button}>Home</button>
                     <button onClick={navigateBack} className={styles.button}>Back</button>
-                    <button onClick={deleteItem} className={styles.button}>Delete Item</button>
+                    <button data-testid='deleteButton' onClick={deleteItem} className={styles.button}>Delete Item</button>
                     { showWarning && (//show warning box if showWarning state dictates so
-                    <div className={styles.warning}>
+                    <div data-testid='warning' className={styles.warning}>
                         <div className={styles.warningContent}>
                             <h1>Are you sure you want to delete this item from the collection?</h1>
                             <div>
@@ -75,8 +75,8 @@ export default function Item(){
                         </div>
                     </div>
                     )}
-                    <h1 className={styles.header}>{itemName}</h1>
-                    <ul>
+                    <h1 data-testid="header" className={styles.header}>{itemName}</h1>
+                    <ul data-testid="info" >
                         <li className={styles.info}>Collection: {collectionName}</li>
                         <li className={styles.info}>Series: {series}</li>
                         <li className={styles.info}>Number: {number}</li>

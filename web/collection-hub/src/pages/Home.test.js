@@ -1,6 +1,6 @@
 import Home from "./Home";
 import {screen} from '@testing-library/react';
-import renderWithRouter from '../test-utils'
+import renderWithRouter from '../test-utils';
 
 test('contains header', ()=>{
     renderWithRouter(<Home />);
