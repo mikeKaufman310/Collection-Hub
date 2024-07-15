@@ -1,7 +1,5 @@
 import Collection from "./Collection";
 import {render, screen, fireEvent} from '@testing-library/react';
-import renderWithRouter from "../test-utils";
-import { createMemoryHistory } from 'history';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 
 test('contains home button', () => {

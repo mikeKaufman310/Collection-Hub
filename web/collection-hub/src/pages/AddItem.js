@@ -70,7 +70,7 @@ export default function AddItem(){
     return(
         <div className={styles.container}>
             <div className={styles.centerContainer}>
-                <div className={styles.buttonAndInput}>
+                <div data-testid='inputs' className={styles.buttonAndInput}>
                     <input type="text" placeholder="Name" value={inputValueName} onChange={handleChangeName} className={styles.input}/>
                     <input type="text" placeholder="Series (Optional)" value={inputValueSeries} onChange={handleChangeSeries} className={styles.input}/>
                     <input type="text" placeholder="Number (Optional)" value={inputValueNumber} onChange={handleChangeNumber} className={styles.input}/>
