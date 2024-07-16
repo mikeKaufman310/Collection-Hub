@@ -44,8 +44,8 @@ export default function AddCollection(){
     return(
         <div className={styles.container}>
             <div className={styles.centerContainer}>
-              <button onClick={goToHome} className={styles.button}>Home</button>
-              <div className={styles.buttonAndInput}>
+              <button data-testid='homeButton' onClick={goToHome} className={styles.button}>Home</button>
+              <div data-testid='inputAndButton' className={styles.buttonAndInput}>
                 <input type="text"  placeholder="Name" value={inputValue} onChange={handleChange} className={styles.input}/>
                 <button onClick={addNewCollection} className={styles.startButton}>Start Collection</button>
               </div>
