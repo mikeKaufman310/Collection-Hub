@@ -2,6 +2,11 @@ import Home from "./Home";
 import {screen} from '@testing-library/react';
 import renderWithRouter from '../test-utils';
 
+/**
+ * Test Suite for unit testing web frontend home page
+ * @author Michael Kaufman
+ */
+
 test('contains header', ()=>{
     renderWithRouter(<Home />);
     const headerElement = screen.getByText(/CollectionHub/i);

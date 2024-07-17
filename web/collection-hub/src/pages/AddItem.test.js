@@ -1,6 +1,11 @@
 import AddItem from "./AddItem";
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import {render, screen, fireEvent} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
+
+/**
+ * Test Suite for unit testing web frontend add item page
+ * @author Michael Kaufman
+ */
 
 test('inputs appear on page render', ()=>{
     render(

@@ -2,6 +2,11 @@ import Item from "./Item";
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import {render, screen, fireEvent} from '@testing-library/react';
 
+/**
+ * Test Suite for unit testing web frontend item page
+ * @author Michael Kaufman
+ */
+
 test('warning appears on delete click', ()=>{
     render(
         <MemoryRouter initialEntries={[{ pathname: '/viewCollection', state: { element: {name: "mockCollection"} } }]}>

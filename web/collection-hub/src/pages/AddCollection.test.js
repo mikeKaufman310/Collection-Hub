@@ -1,7 +1,11 @@
 import AddCollection from "./AddItem";
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import {render, screen, fireEvent} from '@testing-library/react';
+import {screen} from '@testing-library/react';
 import renderWithRouter from '../test-utils';
+
+/**
+ * Test Suite for unit testing web frontend add collection page
+ * @author Michael Kaufman
+ */
 
 test('expect home button to be present on render', ()=>{
     renderWithRouter(<AddCollection/>);

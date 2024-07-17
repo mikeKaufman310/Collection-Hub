@@ -2,6 +2,11 @@ import Collection from "./Collection";
 import {render, screen, fireEvent} from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 
+/**
+ * Test Suite for unit testing web frontend collection page
+ * @author Michael Kaufman
+ */
+
 test('contains home button', () => {
     render(
         <MemoryRouter initialEntries={[{ pathname: '/viewCollection', state: { element: {name: "mockCollection"} } }]}>
