@@ -1,6 +1,8 @@
 import { useState, useLocation } from "react-router-dom";
+import OpenAI from "openai";
 
 const BACKEND_PORT = 8080;
+const ai = new OpenAI();
 
 //this component will be used in Collection component
 export default function EbayLink(){
@@ -28,6 +30,14 @@ export default function EbayLink(){
     xhr.send(JSON.stringify(collectionName));
     console.log("Received " + collectionName + " data for open ai use");
     //query open ai using list of elements in collection already to get good ebay search
+    const openAiQuery = async () =>{
+        const search = await ai.chat.completions.create({
+            messages: [{ role: "system", content: `Give me an ebay search for ${collectionName} products` }],//use data state here for query
+            model: "gpt-4o-mini",
+        });
+        console.log(search.choices[0]);//for debugging
+    };
+    openAiQuery();
     //hit ebay api to get link of search results
     //render search result link in return html of react component
     
