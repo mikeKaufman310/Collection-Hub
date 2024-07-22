@@ -1,6 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import {useState} from 'react';
 import styles from './Collection.module.css';
+import EbayLink from "./components/EbayLink";
 
 const BACKEND_PORT = 8080;
 
@@ -126,6 +127,7 @@ export default function Collection(){
             <div data-testid='header' className={styles.right}>
                 <h1 className={styles.header}>{collectionName}</h1>
             </div>
+            <EbayLink/>
         </div>
     );
 }

@@ -1,9 +1,12 @@
-import { useState, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useState } from "react";
 import OpenAI from "openai";
 import axios from 'axios';
 
 const BACKEND_PORT = 8080;
-const ai = new OpenAI();
+//const ai = new OpenAI({apiKey: "sk-None-AwOgN9xEcAMeBU62MD13T3BlbkFJBZo6sR0b6y5gWWrtTMZ5", dangerouslyAllowBrowser: true});
+const ai = new OpenAI({apiKey: "sk-proj-HB3LzScV7YSA6APf5RBaT3BlbkFJ9ZRkg7aY5IulYgkOR5st", dangerouslyAllowBrowser: true});
+//IMPORTANT: might need to change to groq to be free
 
 //this component will be used in Collection component
 export default function EbayLink(){
@@ -13,6 +16,7 @@ export default function EbayLink(){
     const [data, setData] = useState([]);
     const [searchStr, setSearchStr] = useState('');
     const [searchResults, setSearchResults] = useState([]);
+    const [trigger, setTrigger] = useState(false);
     //query backend for list of item already contained
     const xhr = new XMLHttpRequest();
     xhr.open('POST', `http://localhost:${BACKEND_PORT}/getCollection`, true);
@@ -20,10 +24,10 @@ export default function EbayLink(){
         if(this.readyState===XMLHttpRequest.DONE){
             if(xhr.status===200){
                 console.log(xhr.responseText);
-                //if(!trigger){
+                if(!trigger){
                     setData(JSON.parse(xhr.responseText));
-                    //setTrigger(true);
-                //}
+                    setTrigger(true);
+                }
             return;
             }
         }else{
@@ -36,7 +40,7 @@ export default function EbayLink(){
     const openAiQuery = async () =>{
         const search = await ai.chat.completions.create({
             messages: [{ role: "system", content: `Give me an ebay search for ${collectionName} products that does not contain ${data}` }],//use data state here for query
-            model: "davinci-002",
+            model: "gpt-3.5-turbo",
         });
         setSearchStr(search.choices[0]);
         console.log(search.choices[0]);//for debugging
@@ -55,8 +59,9 @@ export default function EbayLink(){
             }
         });
         setSearchResults(response.data.itemSummaries);
+        console.log(searchResults);//for debugging
     };
-    ebaySearch();
+    //ebaySearch();//commented out to debug openai query
     //render search result link in return html of react component
     
     //QUESTION: should we save the queries in a backend repository for reuse?
