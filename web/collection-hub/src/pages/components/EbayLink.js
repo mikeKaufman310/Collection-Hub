@@ -4,8 +4,8 @@ import OpenAI from "openai";
 import axios from 'axios';
 
 const BACKEND_PORT = 8080;
-//const ai = new OpenAI({apiKey: "sk-None-AwOgN9xEcAMeBU62MD13T3BlbkFJBZo6sR0b6y5gWWrtTMZ5", dangerouslyAllowBrowser: true});
-const ai = new OpenAI({apiKey: "sk-proj-HB3LzScV7YSA6APf5RBaT3BlbkFJ9ZRkg7aY5IulYgkOR5st", dangerouslyAllowBrowser: true});
+//const ai = new OpenAI({dangerouslyAllowBrowser: true});
+const ai = new OpenAI({dangerouslyAllowBrowser: true});
 //IMPORTANT: might need to change to groq to be free
 
 //this component will be used in Collection component
