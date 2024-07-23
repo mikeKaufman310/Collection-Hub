@@ -1,13 +1,10 @@
 import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Groq from "groq-sdk";
 import axios from 'axios';
 
 const BACKEND_PORT = 8080;
-//const ai = new OpenAI();
 const ai = new Groq({apiKey:'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', dangerouslyAllowBrowser:true});
-//console.log(process.env.GROQ_API_KEY);
-//IMPORTANT: might need to change to groq to be free
 
 //this component will be used in Collection component
 export default function EbayLink(){
@@ -21,44 +18,53 @@ export default function EbayLink(){
     const [aiTrig, setAiTrig] = useState(false);//trigger for single ai api call
 
     //query backend for list of item already contained
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', `http://localhost:${BACKEND_PORT}/getCollection`, true);
-    xhr.onreadystatechange = function(){
-        if(this.readyState===XMLHttpRequest.DONE){
-            if(xhr.status===200){
-                //console.log(xhr.responseText);
-                if(!trigger){
-                    setData(JSON.parse(xhr.responseText));
-                    setTrigger(true);
-                    if(!aiTrig){
-                        aiQuery();
-                        setAiTrig(true);
+    const collectionCall = ()=>{
+        return new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', `http://localhost:${BACKEND_PORT}/getCollection`, true);
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState===XMLHttpRequest.DONE){
+                    if(xhr.status===200){
+                        console.log(xhr.responseText);
+                        if(!trigger){
+                            resolve(JSON.parse(xhr.responseText));
+                            setTrigger(true);
+                        }
+                        return;
+                    }else{
+                        reject(xhr.status);
                     }
                 }
-                return;
-            }
-        }else{
-            console.error(xhr.statusText);
-        }
+            };
+            xhr.send(JSON.stringify(collectionName));
+            console.log("Received " + collectionName + " data for open ai use");//logging
+        });
     };
-    xhr.send(JSON.stringify(collectionName));
-    console.log("Received " + collectionName + " data for open ai use");//logging
 
     //query open ai using list of elements in collection already to get good ebay search
     const aiQuery = async () =>{
-        let contentStr = `Give me an example of an ebay search for ${collectionName} products that does not contain`;//string to build query for groq model
-        for(let i = 0; i < data.collectionList.length; i++){//build string
-            contentStr+=(" " + data.collectionList[i].name);
+        const collectionData = await collectionCall();
+        let contentStr = `With no other words, give me a single example of an ebay search for ${collectionName} products that does not contain`;//string to build query for groq model
+        //console.log(data);//for debuggin
+        const recvList = collectionData.collectionList;
+        for(let i = 0; i < recvList.length; i++){//build string
+            contentStr+=(" or " + recvList[i].name);
         }
+        
         //query ai
+        console.log(contentStr);//for debuggin
         const search = await ai.chat.completions.create({
             messages: [{ role: "user", content: `${contentStr}` }],//use data state here for query
             model: "llama3-8b-8192",
         });
         setSearchStr(search.choices[0]);//use hook to change state
         console.log(search.choices[0].message.content);//for debugging
-        ebaySearch();
+        //ebaySearch();//commented out for debugging purposes
     };
+
+    useEffect(()=>{
+        aiQuery();
+    },[]);
 
     //hit ebay api to get link of search results
     const ebaySearch = async () => {
@@ -77,7 +83,7 @@ export default function EbayLink(){
     };
     //render search result link in return html of react component
     
-    //QUESTION: should we save the queries in a backend repository for reuse?
+    //QUESTION: should we save the queries in a backend repository for reuse? after thought, not, because collection may grow or shrink since last query
     return(
         <div></div>
     );
