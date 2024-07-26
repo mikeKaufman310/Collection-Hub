@@ -72,6 +72,7 @@ export default function EbayLink(){
         aiQuery();
     },[]);
 
+    //so it seems to me like this below call should be made by the server and then the token must be served to the browser as to not expose my client secret in browser
     const ebayTokenGet = async ()=>{
         const auth = base64.encode("MichaelK-collecti-SBX-2c6937daa-ac4cbdc3:SBX-e0b1e5f0fc5b-b166-467a-8c5a-3d8a");
         try{
